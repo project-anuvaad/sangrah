@@ -23,10 +23,13 @@ class ParallelCorpusCreateResource(Resource):
 
         search_result = {}
         try:
-            search_result = datasetRepo.store_parallel_corpus_dataset(result)
+            search_result   = datasetRepo.store_parallel_corpus_dataset(result)
+            tags            = appParallelCorpusObj.get_tags(body)
+            log_info('dataset tags {}'.format(tags), LOG_WITHOUT_CONTEXT)
+
         except Exception as e:
             log_exception("Exception at ParallelCorpusCreateResource ", LOG_WITHOUT_CONTEXT, e)
-            res = APIResponse(Status.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
+            res = APIResponse(APIStatus.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
             return res.getresjson(), 400
 
         res = APIResponse(APIStatus.SUCCESS.value, search_result)

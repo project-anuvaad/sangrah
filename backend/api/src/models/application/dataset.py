@@ -57,3 +57,24 @@ class ParallelDataset(Dataset):
         if data['count']    < 100:
             return False, 'count'
         return True, data
+
+    def get_tags(self, data):
+        tags    = []
+
+        langPair            = self.get_value_from_key(data, 'languagePairs')
+        tags.append(langPair['sourceLanguage']['value'] + '-' + langPair['targetLanguage']['value'])
+        tags.append(langPair['targetLanguage']['value'] + '-' + langPair['sourceLanguage']['value'])
+
+        collectionSource    = self.get_value_from_key(data, 'collectionSource')
+        tags.extend(collectionSource['value'])
+
+        domain              = self.get_value_from_key(data, 'domain')
+        tags.extend(domain['value'])
+
+        collectionMethod    = self.get_value_from_key(data, 'collectionMethod')
+        tags.extend(collectionMethod['value'])
+
+        license             = self.get_value_from_key(data, 'license')
+        tags.append(license['value'])
+
+        return tags
