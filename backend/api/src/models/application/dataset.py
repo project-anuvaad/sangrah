@@ -1,9 +1,8 @@
 from src.utilities.app_context import LOG_WITHOUT_CONTEXT
 from src.models.enums.app_enums import STAGE, CORPUS_TYPE
-from src.utilities.pymongo_data_handling import normalize_bson_to_json
 
 import uuid
-import  datetime
+import datetime
 
 class Dataset(object):
     def __init__(self):
@@ -54,6 +53,8 @@ class ParallelDataset(Dataset):
 
         data['datasetId']   = self.datasetId
         data['stage']       = self.stage
+        data['submittedOn'] = self.submittedOn
+        
         if data['count']    < 100:
             return False, 'count'
         return True, data

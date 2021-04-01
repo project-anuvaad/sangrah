@@ -3,17 +3,21 @@ from anuvaad_auditor.loghandler import log_info, log_exception
 from flask import request
 from src.utilities.app_context import LOG_WITHOUT_CONTEXT
 from src.models.application.dataset import ParallelDataset as AppParallelDataset
+from src.models.application.summarize_dataset import SummarizeDataset as AppSummarizeDataset
+
 from src.models.api_response import APIResponse
 from src.models.api_status import APIStatus
-from src.repositories import DatasetRepo
+from src.repositories import DatasetRepo, SummarizeDatasetRepo
 
-datasetRepo     = DatasetRepo()
+datasetRepo             = DatasetRepo()
+summarizeDatasetRepo    = SummarizeDatasetRepo()
 
 class ParallelCorpusCreateResource(Resource):
     def post(self):
         body        = request.get_json()
 
         appParallelCorpusObj    = AppParallelDataset()
+        appSummarizeDataset     = AppSummarizeDataset()
         status, result          = appParallelCorpusObj.get_validated_dataset(body)
         if status == False:
             log_info('Missing params in ParallelCorpusCreateResource {} missing: {}'.format(body, key), LOG_WITHOUT_CONTEXT)
@@ -23,9 +27,11 @@ class ParallelCorpusCreateResource(Resource):
 
         search_result = {}
         try:
-            search_result   = datasetRepo.store_parallel_corpus_dataset(result)
-            tags            = appParallelCorpusObj.get_tags(body)
+            search_result       = datasetRepo.store_parallel_corpus_dataset(result)
+            tags                = appParallelCorpusObj.get_tags(body)
             log_info('dataset tags {}'.format(tags), LOG_WITHOUT_CONTEXT)
+            summarize_result    = appSummarizeDataset.create(search_result, tags)
+            summarizeDatasetRepo.store_summarize_dataset(summarize_result)
 
         except Exception as e:
             log_exception("Exception at ParallelCorpusCreateResource ", LOG_WITHOUT_CONTEXT, e)

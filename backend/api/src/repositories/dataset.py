@@ -15,4 +15,4 @@ class DatasetRepo(object):
     def store_parallel_corpus_dataset(self, dataset):
         if self.datasetModel.store(dataset) == True:
             return self.datasetModel.search(dataset['datasetId'])
-        return None
+        return False
