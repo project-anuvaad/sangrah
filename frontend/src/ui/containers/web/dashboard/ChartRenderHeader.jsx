@@ -89,24 +89,28 @@ class ChartRenderHeader extends React.Component {
 
                         <Toolbar disableGutters={!open_sidebar} style={{ minHeight: "50px" }}>
 
-                           
-                                <div style={{display: "flex", flexDirection: "row"}}>
-                                    {this.props.currentPage !== 0
-                                        &&
-                                        <IconButton id="menu" style={{ marginLeft: "10px" }}
-                                            onClick={() => this.props.handleOnClick(this.props.currentPage-1)}
-                                            className={classes.menuButton} color="inherit" aria-label="Menu">
-                                            <MenuIcon />
-                                        </IconButton>
-                                    }
-                                    <div>
-                                        <Typography variant="h2" >
-                                            Sangrah
-                                        </Typography>
-                                    </div>
-                                </div>
 
-                          
+                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                {this.props.currentPage !== 0
+                                    &&
+                                    <div style={{display: "flex", flexDirection: "row"}}>
+                                        <IconButton id="menu" style={{ marginLeft: "10px", fontSize: "20px" }}
+                                            onClick={() => this.props.handleOnClick(this.props.currentPage - 1)}
+                                            className={classes.menuButton} color="inherit" aria-label="Menu">
+                                            <MenuIcon fontSize="large" />
+                                        </IconButton>
+                                        <div style={{ borderLeft: "1px solid #D6D6D6", height: "30px", marginRight: "10px", marginTop: "6px" }}></div>
+
+                                    </div>
+                                }
+                                <div>
+                                    <Typography variant="h2" style={{ position: 'absolute', left: '5%', top: "25%" }}>
+                                        Sangrah
+                                        </Typography>
+                                </div>
+                            </div>
+
+
                         </Toolbar>
                     </AppBar>
 
