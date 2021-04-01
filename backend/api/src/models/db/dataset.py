@@ -20,10 +20,22 @@ class DatasetModel(object):
     def store(self, dataset):
         try:
             collections = get_db()[DB_SCHEMA_NAME]
-            results     = collections.insert_one(dataset)
-            if len(tasks) == len(results.inserted_ids):
+            result     = collections.insert_one(dataset)
+            if result != None and result.acknowledged == True:
                 return True
         except Exception as e:
             log_exception("db connection exception ",  LOG_WITHOUT_CONTEXT, e)
             return False
+
+    def search(self, datasetId):
+        updated_docs    = []
+        try:
+            collections     = get_db()[DB_SCHEMA_NAME]
+            docs            = collections.find({'datasetId': datasetId})
+            for doc in docs:
+                updated_docs.append(normalize_bson_to_json(doc))
+            return updated_docs[0]
+        except Exception as e:
+            log_exception("db connection exception ",  LOG_WITHOUT_CONTEXT, e)
+            return []
     

@@ -1,13 +1,14 @@
 from src.utilities.app_context import LOG_WITHOUT_CONTEXT
 from src.models.enums.app_enums import STAGE, CORPUS_TYPE
+from src.utilities.pymongo_data_handling import normalize_bson_to_json
 
 import uuid
 import  datetime
 
 class Dataset(object):
     def __init__(self):
-        self.datasetId      = str(uuid.uuid4)
-        self.stage          = STAGE.SUBMITTED
+        self.datasetId      = str(uuid.uuid4())
+        self.stage          = STAGE.SUBMITTED.value
         self.count          = None
         self.description    = None
 
@@ -29,12 +30,11 @@ class Dataset(object):
 
 class ParallelDataset(Dataset):
     def __init__(self):
-        self.type               = CORPUS_TYPE.PARALLEL_CORPUS
+        super().__init__()
+        self.type               = CORPUS_TYPE.PARALLEL_CORPUS.value
         self.languagePairs      = None
         self.targetValidated    = None
         self.alignmentMethod    = None
-
-        super().__init__()
 
     def mandatory_params(self, data):
         keys    = ['count', 'submitter', 'contributors', 'languagePairs', 'collectionSource', 'domain', \
@@ -44,7 +44,16 @@ class ParallelDataset(Dataset):
                 return False, key
         return True, None
     
+    def get_value_from_key(self, data, key):
+        return data[key]
 
-    def validate(self, data):
+    def get_validated_dataset(self, data):
         status, key = self.mandatory_params(data)
-        return status, key
+        if status == False:
+            return status, key
+
+        data['datasetId']   = self.datasetId
+        data['stage']       = self.stage
+        if data['count']    < 100:
+            return False, 'count'
+        return True, data
