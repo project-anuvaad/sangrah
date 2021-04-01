@@ -30,7 +30,7 @@ import ChartRenderHeader from "./ChartRenderHeader"
 
 var randomColor = require('randomcolor');
 var jp = require('jsonpath')
-const data = [{ value: 2400614, label: 'Hindi' }, { value: 1290410, label: 'Bengali' }, { value: 1190325, label: 'Tamil' }, { value: 1283020, label: 'Malayalam' }, { value: 1362367, label: 'Telugu' }, { value: 1085055, label: 'Kannada' }, { value: 1456320, label: 'Marathi' },]
+const data = [{ value: 2400614, label: 'Hindi' }, { value: 1290410, label: 'Bengali' }, { value: 1190325, label: 'Tamil' }, { value: 1283020, label: 'Malayalam' }, { value: 1362367, label: 'Telugu' }, { value: 1085055, label: 'Kannada' }, { value: 1456320, label: 'Marathi' },{ value: 2400614, label: 'Hindi' }, { value: 1290410, label: 'Bengali' }, { value: 1190325, label: 'Tamil' }]
 const source = [{ value: 81884, label: 'HC/SUVAS' }, { value: 3000, label: 'Legal Terminologies' }, { value: 263100, label: 'PIB' }, { value: 264200, label: 'NewsOnAir' }, { value: 81884, label: 'DD News Sports' }, { value: 307430, label: 'OneIndia' }, { value: 263100, label: 'Times of India' }]
 const domain = [{ value: 1442876, label: 'Judicial' }, { value: 569327, label: 'News' }, { value: 754631, label: 'General' }, { value: 632419, label: 'Tourism' }, { value: 654631, label: 'sports' }, { value: 652419, label: 'Financial' }]
 class ChartRender extends React.Component {
@@ -41,7 +41,7 @@ class ChartRender extends React.Component {
       word: "",
       currentPage: 0,
       dataSet: data,
-      title: "Language Datasets Chart"
+      title: "Number of parallel sentences per language with English"
     }
 
   }
@@ -81,13 +81,13 @@ class ChartRender extends React.Component {
   handleOnClick(value) {
     switch (value) {
       case 1:
-        this.setState({ currentPage: value, dataSet: domain, title: "Domain Details Chart" })
+        this.setState({ currentPage: value, dataSet: domain, title: "Number of parallel sentences (Domain basis)" })
         break;
       case 2:
-        this.setState({ currentPage: value, dataSet: source, title: "Source Details Chart" })
+        this.setState({ currentPage: value, dataSet: source, title: "Number of parallel sentences (by source basis)" })
         break;
       case 0:
-        this.setState({ currentPage: value, dataSet: data, title: "Language Datasets Chart" })
+        this.setState({ currentPage: value, dataSet: data, title: "Number of parallel sentences per language with English" })
         break;
 
     }
