@@ -58,9 +58,9 @@ const GlobalStyles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    width: theme.spacing.unit * 7,
+    width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9
+      width: theme.spacing(9)
     }
   },
   toolbar: {
@@ -79,7 +79,7 @@ const GlobalStyles = theme => ({
     background: theme.palette.background.default,
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     marginTop: '3%'
   }
 });

@@ -8,8 +8,6 @@ import Layout from "./ui/containers/web/common/Layout";
 
 import NotFound from "./ui/containers/web/NotFound";
 import history from "./web.history";
-import DrillSourceRender from './ui/containers/web/dashboard/DrillSourceRender' 
-import DrillChartRender from './ui/containers/web/dashboard/DrillSourceRender';
 import ChartRender from './ui/containers/web/dashboard/ChartRender'
 const PrivateRoute = ({ component: Component, authenticate, ...rest }) => (
   <Route {...rest} render={props => (authenticate ? <Layout component={Component} {...props} /> : <Redirect to={{ pathname: "/" }} />)} />
@@ -30,10 +28,10 @@ class AppRoutes extends React.Component {
       <Router history={history}>
         <div>
           <Switch>
-            <Route exact path="/" component={Login} />
+            {/* <Route exact path="/" component={Login} /> */}
             {/* <PrivateRoute path="/*" component={NotFound} authenticate={this.authenticateUser()} /> */}
            
-              <PrivateRoute
+              {/* <PrivateRoute
               path={`${process.env.PUBLIC_URL}/parallel-corpus/:lang/:source`}
               dontShowLoader
               title={"Organization List"}
@@ -55,7 +53,7 @@ class AppRoutes extends React.Component {
               currentMenu="organization-list"
               // dontShowHeader={true}
 
-            />
+            /> */}
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/parallel-corpus`}
               dontShowLoader

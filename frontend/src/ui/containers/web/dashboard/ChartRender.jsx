@@ -4,24 +4,13 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import Toolbar from "@material-ui/core/Toolbar";
-import AppBar from "@material-ui/core/AppBar";
-import MenuIcon from '@material-ui/icons/Menu';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
-import GlobalStyles from "../../../styles/web/styles";
-import Theme from "../../../theme/web/theme-red";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import classNames from "classnames";
-import history from "../../../../web.history";
 import ChartStyles from "../../../styles/web/chartStyles";
 import {
   BarChart, Bar, Brush, Cell, CartesianGrid, ReferenceLine, ReferenceArea,
   XAxis, YAxis, Tooltip, Legend, ErrorBar, LabelList, Rectangle
 } from 'recharts';
-import ReactECharts from 'echarts-for-react';
 import _ from 'lodash';
 
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
@@ -132,7 +121,7 @@ class ChartRender extends React.Component {
                 {
                   data.map((entry, index) => {
                     const color = Math.floor(Math.random() * 16777215).toString(16);
-                    return <Cell fill={`#${color}`} />;
+                    return <Cell key ={index} fill={`#${color}`} />;
                   })
                 }
               </Bar>
