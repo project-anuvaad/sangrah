@@ -62,6 +62,8 @@ class ParallelDataset(Dataset):
     def get_tags(self, data):
         tags    = []
 
+        tags.append(self.type)
+        
         langPair            = self.get_value_from_key(data, 'languagePairs')
         tags.append(langPair['sourceLanguage']['value'] + '-' + langPair['targetLanguage']['value'])
         tags.append(langPair['targetLanguage']['value'] + '-' + langPair['sourceLanguage']['value'])

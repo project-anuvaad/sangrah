@@ -40,3 +40,26 @@ class ParallelCorpusCreateResource(Resource):
 
         res = APIResponse(APIStatus.SUCCESS.value, search_result)
         return res.getres()
+
+class DatasetSearchResource(Resource):
+    def post(self):
+        body        = request.get_json()
+        appSummarizeDataset     = AppSummarizeDataset()
+
+        status, result          = appSummarizeDataset.get_validated_data(body)
+        if status == False:
+            log_info('Missing params in DatasetSearchResource {} missing: {}'.format(body, key), LOG_WITHOUT_CONTEXT)
+            res = APIResponse(APIStatus.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
+            return res.getresjson(), 400
+        
+        search_result = {}
+        try:
+            status, search_result   = summarizeDatasetRepo.search(result)
+            
+        except Exception as e:
+            log_exception("Exception at DatasetSearchResource ", LOG_WITHOUT_CONTEXT, e)
+            res = APIResponse(APIStatus.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
+            return res.getresjson(), 400
+
+        res = APIResponse(APIStatus.SUCCESS.value, search_result)
+        return res.getres()

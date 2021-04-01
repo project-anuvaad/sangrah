@@ -16,3 +16,7 @@ class SummarizeDatasetRepo(object):
         if self.summarizeDatasetModel.store(dataset) == True:
             return True
         return False
+
+    def search(self, search_data):
+        print(search_data)
+        return True, {}
