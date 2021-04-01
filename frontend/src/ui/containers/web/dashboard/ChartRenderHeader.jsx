@@ -90,7 +90,7 @@ class ChartRenderHeader extends React.Component {
                         <Toolbar disableGutters={!open_sidebar} style={{ minHeight: "50px" }}>
 
                            
-                                <div>
+                                <div style={{display: "flex", flexDirection: "row"}}>
                                     {this.props.currentPage !== 0
                                         &&
                                         <IconButton id="menu" style={{ marginLeft: "10px" }}

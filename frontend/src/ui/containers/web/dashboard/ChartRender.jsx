@@ -108,26 +108,25 @@ class ChartRender extends React.Component {
     }
     this.getData()
     return (
+       
 
-      <div>
+        <div className={classes.div}>
         <ChartRenderHeader
           handleOnClick={this.handleOnClick.bind(this)}
           currentPage={this.state.currentPage}
 
         />
-        <div className={classes.div}>
-
           <Typography value="" variant="h2" className={classes.typographyHeader}>
             {this.state.title}
           </Typography>
           <Paper elevation={3} style={{ minHeight: '70%' }} className={classes.paper}>
-            <BarChart width={900} height={400} data={this.state.dataSet} maxBarSize={100}>
+            <BarChart width={900} height={400} data={this.state.dataSet} maxBarSize={100} style={{ margin: "30px" }}>
               <XAxis dataKey="label" />
-              <YAxis type="number" />
-              <CartesianGrid horizontal={true} vertical={false} />
+              <YAxis type="number" dx={0} width={100} />
+              <CartesianGrid horizontal={true} vertical={false} margin={60} />
 
               <Tooltip />
-              <Bar dataKey="value" fill="green" maxBarSize={100} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1) }}>
+              <Bar dataKey="value" fill="green" maxBarSize={100} onClick={(event) => {  this.handleOnClick(this.state.currentPage + 1) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
 
                 <LabelList dataKey="value" position="top" />
                 {
@@ -140,7 +139,6 @@ class ChartRender extends React.Component {
             </BarChart>
           </Paper>
         </div>
-      </div>
 
     )
   }
