@@ -758,17 +758,19 @@ components:
           enum:
           - PARAMS
         value:
-          type: string
-          enum:
-          - general
-          - news
-          - education
-          - legal
-          - government-press-release
-          - healthcare
-          - movies
-          - subtitles
-          - sports
+          type: array
+          items:
+            type: string
+            enum:
+            - general
+            - news
+            - education
+            - legal
+            - government-press-release
+            - healthcare
+            - movies
+            - subtitles
+            - sports
     TargetTextValidated:
       type: object
       properties:
@@ -878,15 +880,17 @@ components:
           enum:
           - PARAMS
         value:
-          type: string
+          type: array
           description: various collection methods user have used to create the dataset
-          enum:
-          - web-scrapping
-          - manual-human-annotation
-          - algorithm-auto-aligned
-          - algorithm-back-translated
-          - phone-recorded-audio
-          - crowd-sourced-audio
+          items:
+            type: string
+            enum:
+            - web-scrapping
+            - manual-human-translated
+            - algorithm-auto-aligned
+            - algorithm-back-translated
+            - phone-recorded-audio
+            - crowd-sourced-audio
     AudioFormat:
       type: object
       properties:
