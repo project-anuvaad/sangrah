@@ -34,16 +34,17 @@ class ParallelDataset(Dataset):
         self.targetValidated    = None
         self.alignmentMethod    = None
 
-        super().__init__(self)
+        super().__init__()
 
     def mandatory_params(self, data):
         keys    = ['count', 'submitter', 'contributors', 'languagePairs', 'collectionSource', 'domain', \
             'collectionMethod', 'license', 'validationSchema', 'hosting']
         for key in keys:
             if key not in data.keys():
-                return False
-        return True
+                return False, key
+        return True, None
     
 
     def validate(self, data):
-        
+        status, key = self.mandatory_params(data)
+        return status, key
