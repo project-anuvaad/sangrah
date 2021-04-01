@@ -1,3 +1,3 @@
-from .app_response import CustomResponse
-from .app_status import Status
+from .api_response import APIResponse
+from .api_status import APIStatus
 

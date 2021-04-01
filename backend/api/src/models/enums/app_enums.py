@@ -5,7 +5,7 @@ class STAGE(enum.Enum):
     VALIDATED               = 'VALIDATED'
     APPROVED                = 'APPROVED'
 
-class CORPUS_TYPE:(enum.Enum):
+class CORPUS_TYPE(enum.Enum):
     PARALLEL_CORPUS         = 'parallel-corpus'
     MONOLINGUAL_CORPUS      = 'monolingual-corpus'
     ASR_CORPUS              = 'asr-corpus'
