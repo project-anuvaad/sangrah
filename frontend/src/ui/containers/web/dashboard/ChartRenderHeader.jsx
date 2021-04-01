@@ -85,7 +85,7 @@ class ChartRenderHeader extends React.Component {
         return (
             <div>
                 <div>
-                    <AppBar position="fixed" color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)} style={{ height: '50px' }}>
+                    <AppBar position="fixed" color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)} style={{ height: '50px', padding: "0% 1%" }}>
 
                         <Toolbar disableGutters={!open_sidebar} style={{ minHeight: "50px" }}>
 
@@ -93,8 +93,8 @@ class ChartRenderHeader extends React.Component {
                             <div style={{ display: "flex", flexDirection: "row" }}>
                                 {this.props.currentPage !== 0
                                     &&
-                                    <div style={{display: "flex", flexDirection: "row"}}>
-                                        <IconButton id="menu" style={{ marginLeft: "10px", fontSize: "20px" }}
+                                    <div style={{display: "flex", flexDirection: "row", width: '5%'}}>
+                                        <IconButton id="menu" style={{ fontSize: "20px" }}
                                             onClick={() => this.props.handleOnClick(this.props.currentPage - 1)}
                                             className={classes.menuButton} color="inherit" aria-label="Menu">
                                             <MenuIcon fontSize="large" />
@@ -104,7 +104,7 @@ class ChartRenderHeader extends React.Component {
                                     </div>
                                 }
                                 <div>
-                                    <Typography variant="h2" style={{ position: 'absolute', left: '5%', top: "25%" }}>
+                                    <Typography variant="h2" style={{ position: 'absolute', left: '4%', top: "25%" }}>
                                         Sangrah
                                         </Typography>
                                 </div>
