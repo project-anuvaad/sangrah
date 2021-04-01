@@ -86,8 +86,6 @@ class ChartRender extends React.Component {
         case 1:
           this.setState({currentPage: 2, dataSet: source, title:  "Source Details Chart"})
           break;
-        default:
-          this.setState({currentPage: 0, dataSet: data, title: "Language Datasets Chart"})
       }
         
     }
@@ -108,32 +106,17 @@ class ChartRender extends React.Component {
         return (
 
           <div className={classes.div}>
-                {/* <ReactECharts
-  option={this.getOption()}
-  notMerge={true}
-  lazyUpdate={true}
-  theme={"theme_name"}
-  onEvents= {onEvents}
-  onChartReady={this.onChartReadyCallback}
-  onChartClick = {(params)=>{
-    console.log("sajish")
-    // Do what you want to do on click event. params depend on the  type of  chart 
-}}
-  
-  
-  
-/> */}
  <Typography value="" variant="h2" className={classes.typographyHeader}>
             {this.state.title}
           </Typography>
           <Paper elevation={3} style={{minHeight:'70%'}} className={classes.paper}>
-<BarChart width={900} height={400} data={this.state.dataSet} maxBarSize={100}>
+<BarChart width={900} height={400} data={this.state.dataSet} maxBarSize={100} style={{margin:"30px"}}>
               <XAxis dataKey="label"/>
-              <YAxis type="number" />
-              <CartesianGrid horizontal={true} vertical={false}/>
+              <YAxis type="number" dx={0} width={100} />
+              <CartesianGrid horizontal={true} vertical={false} margin = {60}/>
               
               <Tooltip />
-              <Bar dataKey="value" fill="green" maxBarSize={100}  onClick={(event)=>{this.handleOnClick(event)}}>
+              <Bar dataKey="value" fill="green" maxBarSize={100}  onClick={(event)=>{this.handleOnClick(event)}} style={{cursor:this.state.currentPage!== 2 &&"pointer"}}>
                 
               <LabelList dataKey="value" position="top"  />
        		{
