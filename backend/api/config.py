@@ -11,5 +11,5 @@ download_folder = 'upload'
 ENABLE_CORS     = False
 
 # mongodb
-MONGO_DB_SCHEMA         = os.environ.get('MONGO_CH_DB', 'annotation')
+MONGO_DB_SCHEMA         = os.environ.get('MONGO_DB_SCHEMA', 'sangrah')
 MONGO_CONNECTION_URL    = os.environ.get('MONGO_CLUSTER_URL', 'mongodb://localhost:27017')
