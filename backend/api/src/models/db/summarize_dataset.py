@@ -5,9 +5,9 @@ from src.db import get_db
 from anuvaad_auditor.loghandler import log_info, log_exception
 import pymongo
 
-DB_SCHEMA_NAME  = 'dataset'
+DB_SCHEMA_NAME  = 'summary_dataset'
 
-class DatasetModel(object):
+class SummarizeDatasetModel(object):
     def __init__(self):
         collections = get_db()[DB_SCHEMA_NAME]
         try:
@@ -28,14 +28,4 @@ class DatasetModel(object):
             return False
 
     def search(self, datasetId):
-        updated_docs    = []
-        try:
-            collections     = get_db()[DB_SCHEMA_NAME]
-            docs            = collections.find({'datasetId': datasetId})
-            for doc in docs:
-                updated_docs.append(normalize_bson_to_json(doc))
-            return updated_docs[0]
-        except Exception as e:
-            log_exception("db connection exception ",  LOG_WITHOUT_CONTEXT, e)
-            return []
-    
+        pass
