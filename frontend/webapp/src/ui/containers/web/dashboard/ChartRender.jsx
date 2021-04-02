@@ -7,21 +7,25 @@ import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ChartStyles from "../../../styles/web/chartStyles";
-import {
+import {ResponsiveContainer,
   BarChart, Bar, Brush, Cell, CartesianGrid, ReferenceLine, ReferenceArea,
   XAxis, YAxis, Tooltip, Legend, ErrorBar, LabelList, Rectangle
 } from 'recharts';
 import _ from 'lodash';
-
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import { showSidebar } from '../../../../flux/actions/apis/common/showSidebar';
 import ChartRenderHeader from "./ChartRenderHeader"
+import Container from '@material-ui/core/Container';
+const theme = createMuiTheme();
+
 
 var randomColor = require('randomcolor');
 var jp = require('jsonpath')
 const data = [{ value: 2400614, label: 'Hindi' }, { value: 1290410, label: 'Bengali' }, { value: 1190325, label: 'Tamil' }, { value: 1283020, label: 'Malayalam' }, { value: 1362367, label: 'Telugu' }, { value: 1085055, label: 'Kannada' }, { value: 1456320, label: 'Marathi' },{ value: 2400614, label: 'Hindi' }, { value: 1290410, label: 'Bengali' }, { value: 1190325, label: 'Tamil' }]
 const source = [{ value: 81884, label: 'HC/SUVAS' }, { value: 3000, label: 'Legal Terminologies' }, { value: 263100, label: 'PIB' }, { value: 264200, label: 'NewsOnAir' }, { value: 81884, label: 'DD News Sports' }, { value: 307430, label: 'OneIndia' }, { value: 263100, label: 'Times of India' }]
 const domain = [{ value: 1442876, label: 'Judicial' }, { value: 569327, label: 'News' }, { value: 754631, label: 'General' }, { value: 632419, label: 'Tourism' }, { value: 654631, label: 'sports' }, { value: 652419, label: 'Financial' }]
+
 class ChartRender extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +91,7 @@ class ChartRender extends React.Component {
     console.log("sajish", params)
   }
 
-
+  
 
   render() {
     const { classes, open_sidebar } = this.props;
@@ -98,26 +102,29 @@ class ChartRender extends React.Component {
     this.getData()
     return (
        
-
+      <Container>
         <div className={classes.div}>
         <ChartRenderHeader
           handleOnClick={this.handleOnClick.bind(this)}
           currentPage={this.state.currentPage}
 
         />
-          <Typography value="" variant="h2" className={classes.typographyHeader}>
+       
+          <Typography value="" variant="h4" className={classes.typographyHeader}>
             {this.state.title}
           </Typography>
-          <Paper elevation={3} style={{ minHeight: '70%' }} className={classes.paper}>
-            <BarChart width={900} height={400} data={this.state.dataSet} maxBarSize={100} style={{ margin: "30px" }}>
+          <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
+          <ResponsiveContainer width="95%" height={400}>
+            <BarChart width={900} height={400} data={this.state.dataSet} maxBarSize={100} >
               <XAxis dataKey="label" />
               <YAxis type="number" dx={0} width={100} />
-              <CartesianGrid horizontal={true} vertical={false} margin={60} />
+              <CartesianGrid horizontal={true} vertical={false} />
 
               <Tooltip />
               <Bar dataKey="value" fill="green" maxBarSize={100} onClick={(event) => {  this.handleOnClick(this.state.currentPage + 1) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
 
-                <LabelList dataKey="value" position="top" />
+                
+                <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} />
                 {
                   data.map((entry, index) => {
                     const color = Math.floor(Math.random() * 16777215).toString(16);
@@ -126,8 +133,11 @@ class ChartRender extends React.Component {
                 }
               </Bar>
             </BarChart>
+            </ResponsiveContainer>
           </Paper>
         </div>
+        </Container>
+        
 
     )
   }

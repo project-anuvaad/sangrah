@@ -5,8 +5,9 @@ const themeDefault = createMuiTheme({
 
   typography: {
     fontFamily: '"Source Sans Pro", "Arial", sans-serif',
-    fontSize: "80px"
+    fontSize: 11
   },
+  
   palette: {
     primary: {
       light: '#1c9ab7',

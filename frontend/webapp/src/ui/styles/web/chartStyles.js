@@ -13,12 +13,15 @@ const FileUploadStyles = theme => ({
       marginTop: theme.spacing(2)
     },
     div:{
-      display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', paddingTop: "5%"
+      display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', paddingTop: "5%", width:'100%'
     },
     typographyHeader:{
-      paddingTop:'1%',
-      minWidth: "5%",
-      fontWeight: "bold"
+     
+      fontSize: 12,
+  '@media (min-width:600px)': {
+    fontSize: 36,
+  }
+  
       
   
     },
@@ -44,8 +47,8 @@ const FileUploadStyles = theme => ({
     },
    paper: {
     
-      width: "1000px",
-      minWidth: "200px",
+      width: "95%",
+      minWidth: "250px",
       marginTop: "2%",
       marginBottom:'1%',
       padding: "3% 3% 3% 3%",

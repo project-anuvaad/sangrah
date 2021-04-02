@@ -99,12 +99,12 @@ class ChartRenderHeader extends React.Component {
                                             className={classes.menuButton} color="inherit" aria-label="Menu">
                                             <MenuIcon fontSize="large" />
                                         </IconButton>
-                                        <div style={{ borderLeft: "1px solid #D6D6D6", height: "30px", marginRight: "10px", marginTop: "6px" }}></div>
+                                        <div style={{ borderLeft: "1px solid #D6D6D6", height: "40px", marginRight: "10px", marginTop: "6px" }}></div>
 
                                     </div>
                                 }
                                 <div>
-                                    <Typography variant="h2" style={{ position: 'absolute', left: '4%', top: "25%" }}>
+                                    <Typography variant="h3" style={{ position: 'absolute', left: '60px', top: "0px" }}>
                                         Sangrah
                                         </Typography>
                                 </div>
