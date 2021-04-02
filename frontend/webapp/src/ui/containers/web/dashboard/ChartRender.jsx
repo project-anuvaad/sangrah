@@ -19,7 +19,21 @@ import ChartRenderHeader from "./ChartRenderHeader"
 
 var randomColor = require('randomcolor');
 var jp = require('jsonpath')
-const data = [{ value: 2400614, label: 'Hindi' }, { value: 1290410, label: 'Bengali' }, { value: 1190325, label: 'Tamil' }, { value: 1283020, label: 'Malayalam' }, { value: 1362367, label: 'Telugu' }, { value: 1085055, label: 'Kannada' }, { value: 1456320, label: 'Marathi' },{ value: 2400614, label: 'Hindi' }, { value: 1290410, label: 'Bengali' }, { value: 1190325, label: 'Tamil' }]
+const data = [
+  { value: 140064, label: 'Punjabi' },
+  { value: 1290410, label: 'Bengali' },
+  { value: 1190325, label: 'Tamil' },
+  { value: 1283020, label: 'Malayalam' },
+  { value: 1362367, label: 'Telugu' },
+  { value: 1085055, label: 'Kannada' },
+  { value: 2400614, label: 'Hindi' },
+  { value: 1456320, label: 'Marathi' },
+  { value: 2400614, label: 'Hindi' },
+  { value: 1290410, label: 'Bengali' },
+  { value: 1190325, label: 'Tamil' },
+  { value: 129410, label: 'Gujarathi' },
+  { value: 119025, label: 'Assamese' }
+]
 const source = [{ value: 81884, label: 'HC/SUVAS' }, { value: 3000, label: 'Legal Terminologies' }, { value: 263100, label: 'PIB' }, { value: 264200, label: 'NewsOnAir' }, { value: 81884, label: 'DD News Sports' }, { value: 307430, label: 'OneIndia' }, { value: 263100, label: 'Times of India' }]
 const domain = [{ value: 1442876, label: 'Judicial' }, { value: 569327, label: 'News' }, { value: 754631, label: 'General' }, { value: 632419, label: 'Tourism' }, { value: 654631, label: 'sports' }, { value: 652419, label: 'Financial' }]
 class ChartRender extends React.Component {
@@ -29,7 +43,7 @@ class ChartRender extends React.Component {
       loading: false,
       word: "",
       currentPage: 0,
-      dataSet: data,
+      dataSet: {},
       title: "Number of parallel sentences per language with English"
     }
 
@@ -65,22 +79,45 @@ class ChartRender extends React.Component {
     return option
   }
 
+  componentDidMount() {
 
+    if (data && Array.isArray(data) && data.length > 0) {
+      let others = data.slice(10, data.length)
+      let othersCount = 0
+      others.map(dataVal => {
+        othersCount = dataVal.value + othersCount
 
-  handleOnClick(value) {
-    switch (value) {
-      case 1:
-        this.setState({ currentPage: value, dataSet: domain, title: "Number of parallel sentences (Domain basis)" })
-        break;
-      case 2:
-        this.setState({ currentPage: value, dataSet: source, title: "Number of parallel sentences (by source basis)" })
-        break;
-      case 0:
-        this.setState({ currentPage: value, dataSet: data, title: "Number of parallel sentences per language with English" })
-        break;
+      })
+
+      let dataSet = data.slice(0, 9)
+      let obj = {}
+      obj.value = othersCount
+      obj.label = "Others"
+      dataSet.push(obj)
+      this.setState({ dataSet })
 
     }
+  }
 
+  handleOnClick(value, event) {
+    if (event.label === "Others") {
+     this.setState({
+       dataSet: data
+     })
+    } else {
+      switch (value) {
+        case 1:
+          this.setState({ currentPage: value, dataSet: domain, title: "Number of parallel sentences (Domain basis)" })
+          break;
+        case 2:
+          this.setState({ currentPage: value, dataSet: source, title: "Number of parallel sentences (by source basis)" })
+          break;
+        case 0:
+          this.setState({ currentPage: value, dataSet: data, title: "Number of parallel sentences per language with English" })
+          break;
+
+      }
+    }
   }
 
   onChartClick = (params) => {
@@ -97,37 +134,37 @@ class ChartRender extends React.Component {
     }
     this.getData()
     return (
-       
 
-        <div className={classes.div}>
+
+      <div className={classes.div}>
         <ChartRenderHeader
           handleOnClick={this.handleOnClick.bind(this)}
           currentPage={this.state.currentPage}
 
         />
-          <Typography value="" variant="h2" className={classes.typographyHeader}>
-            {this.state.title}
-          </Typography>
-          <Paper elevation={3} style={{ minHeight: '70%' }} className={classes.paper}>
-            <BarChart width={900} height={400} data={this.state.dataSet} maxBarSize={100} style={{ margin: "30px" }}>
-              <XAxis dataKey="label" />
-              <YAxis type="number" dx={0} width={100} />
-              <CartesianGrid horizontal={true} vertical={false} margin={60} />
+        <Typography value="" variant="h2" className={classes.typographyHeader}>
+          {this.state.title}
+        </Typography>
+        <Paper elevation={3} style={{ minHeight: '70%' }} className={classes.paper}>
+          <BarChart width={900} height={400} data={this.state.dataSet} maxBarSize={100} style={{ margin: "30px" }}>
+            <XAxis dataKey="label" />
+            <YAxis type="number" dx={0} width={100} />
+            <CartesianGrid horizontal={true} vertical={false} margin={60} />
 
-              <Tooltip />
-              <Bar dataKey="value" fill="green" maxBarSize={100} onClick={(event) => {  this.handleOnClick(this.state.currentPage + 1) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
+            <Tooltip />
+            <Bar dataKey="value" fill="green" maxBarSize={100} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
 
-                <LabelList dataKey="value" position="top" />
-                {
-                  data.map((entry, index) => {
-                    const color = Math.floor(Math.random() * 16777215).toString(16);
-                    return <Cell key ={index} fill={`#${color}`} />;
-                  })
-                }
-              </Bar>
-            </BarChart>
-          </Paper>
-        </div>
+              <LabelList dataKey="value" position="top" />
+              {
+                data.map((entry, index) => {
+                  const color = Math.floor(Math.random() * 16777215).toString(16);
+                  return <Cell key={index} fill={`#${color}`} />;
+                })
+              }
+            </Bar>
+          </BarChart>
+        </Paper>
+      </div>
 
     )
   }
