@@ -204,7 +204,6 @@ class Header extends React.Component {
 
 const mapStateToProps = state => ({
   // open_sidebar: state.open_sidebar.open
-  drill_down: state.drill_down
 });
 
 const mapDispatchToProps = dispatch =>
