@@ -6,7 +6,7 @@ from anuvaad_auditor.loghandler import log_info, log_exception
 import pymongo
 
 DB_SCHEMA_NAME  = 'summary_dataset'
-
+# tag_mapping = {'languagePairs':1, 'collectionSource':3, 'domain':4, 'collectionMethod':5}
 class SummarizeDatasetModel(object):
     def __init__(self):
         collections = get_db()[DB_SCHEMA_NAME]
@@ -27,5 +27,68 @@ class SummarizeDatasetModel(object):
             log_exception("db connection exception ",  LOG_WITHOUT_CONTEXT, e)
             return False
 
-    def search(self, datasetId):
-        pass
+    # def generate_grouping_query(self, group_param):
+    #     group_query = {}
+    #     tag_index = tag_mapping[group_param['value']]
+    #     group_query['$group'] = {"_id": {"$arrayElemAt": ["$tags", tag_index]}, "num_parallel_sentences": {"$sum": "$count"}}
+    #     return group_query
+    
+    def generate_match_query(self, criterions):
+        match_query = {}
+        match_params = []
+        for criteria in criterions:
+            if 'value' not in criteria.keys():
+                match_param = criteria['sourceLanguage']['value'] + '-' + criteria['targetLanguage']['value']
+            else:
+                match_param = criteria['value']
+            match_params.append({"$in": [match_param, "$tags"]})
+        
+        match_query['$match'] = {"$expr": {"$and": match_params}}
+        return match_query
+
+    def search(self, dataset):
+        # aggregate_query = []
+        # aggregate_query.append(self.generate_match_query(dataset['criterions']))
+        # aggregate_query.append(self.generate_grouping_query(dataset['groupby']))
+
+        # try:
+        #     corpus_stats = []
+        #     collections = get_db()[DB_SCHEMA_NAME]
+        #     docs = collections.aggregate(aggregate_query)
+        #     for doc in docs:
+        #         corpus_stats.append(normalize_bson_to_json(doc))
+        #     return corpus_stats
+        # except Exception as e:
+        #     log_exception("db connection exception ",  LOG_WITHOUT_CONTEXT, e)
+        #     return []
+        try:
+            corpus_stats = []
+            aggregate_query = []
+            if dataset['criterions'] != []:
+                aggregate_query.append(self.generate_match_query(dataset['criterions']))
+            collections = get_db()['dataset']
+            unique_set = set()
+            if dataset['groupby']['value'] == 'languagePairs':
+                unique_values = collections.find().distinct('languagePairs')
+                unique_list = []
+                for unique in unique_values:
+                    unique_list.append(unique['sourceLanguage']['value'] + '-' + unique['targetLanguage']['value'])
+                unique_set.update(unique_list)
+            else:
+                unique_values = collections.find().distinct(dataset['groupby']['value'])
+                for unique in unique_values:
+                    unique_set.update(unique['value'])
+        # print(unique_set)
+            collections = get_db()['summary_dataset']
+            for i in unique_set:
+                aggregate_query.append({"$match":{"$expr":{"$in": [i, "$tags"]}}})
+                aggregate_query.append({"$group":{"_id":i, "total":{"$sum":"$count"}}})
+                docs = collections.aggregate(aggregate_query)
+                for doc in docs:
+                    corpus_stats.append(normalize_bson_to_json(doc))
+                aggregate_query.pop()
+                aggregate_query.pop()
+            return corpus_stats
+        except Exception as e:
+            log_exception("db connection exception ",  LOG_WITHOUT_CONTEXT, e)
+            return []

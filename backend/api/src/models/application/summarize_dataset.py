@@ -26,7 +26,7 @@ class SummarizeDataset(object):
     def get_value_from_key(self, data, key):
         return data[key]
     
-    def get_validate_data(self, data):
+    def get_validated_data(self, data):
         status, key = self.mandatory_params(data)
         if status == False:
             return status, key

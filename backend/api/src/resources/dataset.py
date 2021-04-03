@@ -52,7 +52,7 @@ class DatasetSearchResource(Resource):
             res = APIResponse(APIStatus.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
             return res.getresjson(), 400
         
-        search_result = {}
+        search_result = []
         try:
             status, search_result   = summarizeDatasetRepo.search(result)
             
