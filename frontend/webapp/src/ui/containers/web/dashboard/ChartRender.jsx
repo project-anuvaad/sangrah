@@ -104,7 +104,7 @@ class ChartRender extends React.Component {
   }
 
   handleOnClick(value, event) {
-    if (event.label === "Others") {
+    if (event && event.hasOwnProperty("label") && event.label === "Others") {
      this.setState({
        dataSet: data
      })
