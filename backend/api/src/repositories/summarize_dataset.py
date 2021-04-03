@@ -18,5 +18,7 @@ class SummarizeDatasetRepo(object):
         return False
 
     def search(self, search_data):
-        print(search_data)
-        return True, {}
+        corpus_stats = self.summarizeDatasetModel.search(search_data)
+        if corpus_stats == []:
+            return False, corpus_stats
+        return True, corpus_stats
