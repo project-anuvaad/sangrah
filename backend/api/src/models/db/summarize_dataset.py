@@ -9,7 +9,8 @@ DB_SCHEMA_NAME  = 'summary_dataset'
 # tag_mapping = {'languagePairs':1, 'collectionSource':3, 'domain':4, 'collectionMethod':5}
 
 language_extension = {'pu':'Punjabi', 
-                      'be':'Bengali', 
+                      'be':'Bengali',
+                      'en':'English',
                       'ta':'Tamil', 
                       'ml':'Malyalam', 
                       'te':'Telugu', 
@@ -18,6 +19,11 @@ language_extension = {'pu':'Punjabi',
                       'ma':'Marathi',
                       'gu':'Gujarathi',
                       'as':'Assamese'}
+
+def get_key(val, lang_dict):
+    for key, value in lang_dict.items():
+         if val == value:
+             return key
 
 class SummarizeDatasetModel(object):
     def __init__(self):
@@ -50,7 +56,9 @@ class SummarizeDatasetModel(object):
         match_params = []
         for criteria in criterions:
             if 'value' not in criteria.keys():
-                match_param = criteria['sourceLanguage']['value'] + '-' + criteria['targetLanguage']['value']
+                src_lang = get_key(criteria['sourceLanguage']['value'], language_extension)
+                tar_lang = get_key(criteria['targetLanguage']['value'], language_extension)
+                match_param = src_lang + '-' + tar_lang
             else:
                 match_param = criteria['value']
             match_params.append({"$in": [match_param, "$tags"]})
@@ -106,10 +114,10 @@ class SummarizeDatasetModel(object):
                 docs = collections.aggregate(aggregate_query)
                 for doc in docs:
                     json_doc = normalize_bson_to_json(doc)
-                    json_doc['label'] = json_doc['_id']
                     if language_extend == True:
                         lang = json_doc['_id'].split('-')[1]
                         json_doc['_id'] = language_extension[lang]
+                    json_doc['label'] = json_doc['_id']
                     corpus_stats.append(json_doc)
                 aggregate_query.pop()
                 aggregate_query.pop()
