@@ -104,7 +104,7 @@ class ChartRenderHeader extends React.Component {
                                     </div>
                                 }
                                 <div>
-                                    <Typography variant="h3" style={{ position: 'absolute', left: '60px', top: "0px" }}>
+                                    <Typography variant="h4" style={{ position: 'absolute', left: '60px', top: "10%" }}>
                                         Sangrah
                                         </Typography>
                                 </div>

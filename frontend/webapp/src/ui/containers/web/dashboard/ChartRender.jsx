@@ -115,7 +115,7 @@ class ChartRender extends React.Component {
           break;
         case 2:
           this.handleApiCall("parallel-corpus" ,  "source",[{    "type": "PARAMS",    "sourceLanguage": {      "type": "PARAMS",      "value": "English"    },    "targetLanguage": {      "type": "PARAMS",      "value": this.state.selectedLanguage   }  }, {"type":"PARAMS", "value":event && event.hasOwnProperty("label") && event.label}])
-          this.setState({ currentPage: value, title: "Number of parallel sentences (by source basis)" })
+          this.setState({ currentPage: value,dataSetValues:[], title: "Number of parallel sentences (by source basis)" })
           break;
         case 0:
           this.handleApiCall("parallel-corpus" , "languagePairs",[])
@@ -155,7 +155,7 @@ class ChartRender extends React.Component {
               <CartesianGrid horizontal={true} vertical={false} />
 
               <Tooltip />
-              <Bar dataKey="value" fill="green" maxBarSize={100} onClick={(event) => {  this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
+              <Bar dataKey="value" radius={[12, 12, 0, 0]} maxBarSize={100} onClick={(event) => {  this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
 
                 
                 {/* <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} /> */}
