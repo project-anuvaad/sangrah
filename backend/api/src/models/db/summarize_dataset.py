@@ -7,6 +7,18 @@ import pymongo
 
 DB_SCHEMA_NAME  = 'summary_dataset'
 # tag_mapping = {'languagePairs':1, 'collectionSource':3, 'domain':4, 'collectionMethod':5}
+
+language_extension = {'pu':'Punjabi', 
+                      'be':'Bengali', 
+                      'ta':'Tamil', 
+                      'ml':'Malyalam', 
+                      'te':'Telugu', 
+                      'ka':'Kannada', 
+                      'hi':'Hindi', 
+                      'ma':'Marathi',
+                      'gu':'Gujarathi',
+                      'as':'Assamese'}
+
 class SummarizeDatasetModel(object):
     def __init__(self):
         collections = get_db()[DB_SCHEMA_NAME]
@@ -62,6 +74,7 @@ class SummarizeDatasetModel(object):
         #     log_exception("db connection exception ",  LOG_WITHOUT_CONTEXT, e)
         #     return []
         try:
+            language_extend = False
             corpus_stats = []
             aggregate_query = []
             if dataset['criterions'] != []:
@@ -74,18 +87,30 @@ class SummarizeDatasetModel(object):
                 for unique in unique_values:
                     unique_list.append(unique['sourceLanguage']['value'] + '-' + unique['targetLanguage']['value'])
                 unique_set.update(unique_list)
-            else:
-                unique_values = collections.find().distinct(dataset['groupby']['value'])
+                language_extend = True
+            elif dataset['groupby']['value'] == 'source':
+                unique_values = collections.find().distinct('collectionSource')
                 for unique in unique_values:
                     unique_set.update(unique['value'])
+            elif dataset['groupby']['value'] == 'domain':
+                unique_values = collections.find().distinct('domain')
+                for unique in unique_values:
+                    unique_set.update(unique['value'])
+            else:
+                return []
         # print(unique_set)
             collections = get_db()['summary_dataset']
             for i in unique_set:
                 aggregate_query.append({"$match":{"$expr":{"$in": [i, "$tags"]}}})
-                aggregate_query.append({"$group":{"_id":i, "total":{"$sum":"$count"}}})
+                aggregate_query.append({"$group":{"_id":i, "value":{"$sum":"$count"}}})
                 docs = collections.aggregate(aggregate_query)
                 for doc in docs:
-                    corpus_stats.append(normalize_bson_to_json(doc))
+                    json_doc = normalize_bson_to_json(doc)
+                    json_doc['label'] = json_doc['_id']
+                    if language_extend == True:
+                        lang = json_doc['_id'].split('-')[1]
+                        json_doc['_id'] = language_extension[lang]
+                    corpus_stats.append(json_doc)
                 aggregate_query.pop()
                 aggregate_query.pop()
             return corpus_stats
