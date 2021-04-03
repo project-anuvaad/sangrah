@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
-
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
@@ -15,30 +14,12 @@ import _ from 'lodash';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import { showSidebar } from '../../../../flux/actions/apis/common/showSidebar';
+import FetchLanguageDataSets from "../../../../flux/actions/apis/dashboard/languageDatasets";
 import ChartRenderHeader from "./ChartRenderHeader"
 import Container from '@material-ui/core/Container';
 const theme = createMuiTheme();
-
-
 var randomColor = require('randomcolor');
 var jp = require('jsonpath')
-const data = [
-  { value: 140064, label: 'Punjabi' },
-  { value: 1290410, label: 'Bengali' },
-  { value: 1190325, label: 'Tamil' },
-  { value: 1283020, label: 'Malayalam' },
-  { value: 1362367, label: 'Telugu' },
-  { value: 1085055, label: 'Kannada' },
-  { value: 2400614, label: 'Hindi' },
-  { value: 1456320, label: 'Marathi' },
-  { value: 2400614, label: 'Hindi' },
-  { value: 1290410, label: 'Bengali' },
-  { value: 1190325, label: 'Tamil' },
-  { value: 129410, label: 'Gujarathi' },
-  { value: 119025, label: 'Assamese' }
-]
-const source = [{ value: 81884, label: 'HC/SUVAS' }, { value: 3000, label: 'Legal Terminologies' }, { value: 263100, label: 'PIB' }, { value: 264200, label: 'NewsOnAir' }, { value: 81884, label: 'DD News Sports' }, { value: 307430, label: 'OneIndia' }, { value: 263100, label: 'Times of India' }]
-const domain = [{ value: 1442876, label: 'Judicial' }, { value: 569327, label: 'News' }, { value: 754631, label: 'General' }, { value: 632419, label: 'Tourism' }, { value: 654631, label: 'sports' }, { value: 652419, label: 'Financial' }]
 
 class ChartRender extends React.Component {
   constructor(props) {
@@ -47,7 +28,7 @@ class ChartRender extends React.Component {
       loading: false,
       word: "",
       currentPage: 0,
-      dataSet: {},
+      dataSetValues: [],
       title: "Number of parallel sentences per language with English"
     }
 
@@ -55,7 +36,7 @@ class ChartRender extends React.Component {
 
   getData(dataValue) {
     let condition = `$..[*].${dataValue}`
-    let dataCalue = jp.query(data, condition)
+    let dataCalue = jp.query(this.state.dataSetValues, condition)
     return dataCalue
   }
 
@@ -84,53 +65,69 @@ class ChartRender extends React.Component {
   }
 
   componentDidMount() {
+   
+    
 
-    if (data && Array.isArray(data) && data.length > 0) {
-      let others = data.slice(10, data.length)
-      let othersCount = 0
-      others.map(dataVal => {
-        othersCount = dataVal.value + othersCount
+    this.handleApiCall("parallel-corpus" , "languagePairs",[])
+    
+  }
 
-      })
-
-      let dataSet = data.slice(0, 9)
-      let obj = {}
-      obj.value = othersCount
-      obj.label = "Others"
-      dataSet.push(obj)
-      this.setState({ dataSet })
-
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.dataValues !== this.props.dataValues) {
+      if (this.props.dataValues.length > 0) {
+        let others = this.props.dataValues.slice(10, this.props.dataValues.length)
+        let othersCount = 0
+        others.map(dataVal => {
+          othersCount = dataVal.value + othersCount
+  
+        })
+  
+        let dataSetValues = this.props.dataValues.slice(0, 9)
+        let obj = {}
+        if(this.props.dataValues.length > 9){
+          obj.value = othersCount
+        obj.label = "Others"
+        dataSetValues.push(obj)
+        }
+        
+        this.setState({ dataSetValues })
+  
+      }
+      
     }
+  }
+
+  handleApiCall =(dataType,value,criterions)=>{
+    const apiObj = new FetchLanguageDataSets(dataType,value,criterions);
+      this.props.APITransport(apiObj);
   }
 
   handleOnClick(value, event) {
     if (event && event.hasOwnProperty("label") && event.label === "Others") {
      this.setState({
-       dataSet: data
+      dataSetValues: this.state.dataSetValues
      })
     } else {
       switch (value) {
         case 1:
-          this.setState({ currentPage: value, dataSet: domain, title: "Number of parallel sentences (Domain basis)" })
+          this.handleApiCall("parallel-corpus", "domain", [{"type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English"}, "targetLanguage": {      "type": "PARAMS",      "value": this.state.selectedLanguage ? this.state.selectedLanguage :event && event.hasOwnProperty("label") && event.label    }  }])
+          this.setState({ currentPage: value,dataSetValues:[], selectedLanguage:this.state.selectedLanguage ?this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label , title: "Number of parallel sentences (Domain basis)" })
           break;
         case 2:
-          this.setState({ currentPage: value, dataSet: source, title: "Number of parallel sentences (by source basis)" })
+          this.handleApiCall("parallel-corpus" ,  "source",[{    "type": "PARAMS",    "sourceLanguage": {      "type": "PARAMS",      "value": "English"    },    "targetLanguage": {      "type": "PARAMS",      "value": this.state.selectedLanguage   }  }, {"type":"PARAMS", "value":event && event.hasOwnProperty("label") && event.label}])
+          this.setState({ currentPage: value, title: "Number of parallel sentences (by source basis)" })
           break;
         case 0:
-          this.setState({ currentPage: value, dataSet: data, title: "Number of parallel sentences per language with English" })
+          this.handleApiCall("parallel-corpus" , "languagePairs",[])
+          this.setState({ currentPage: value,selectedLanguage:'',dataSetValues:[], title: "Number of parallel sentences per language with English" })
           break;
 
       }
     }
   }
 
-  onChartClick = (params) => {
-    console.log("sajish", params)
-  }
-
-  
-
   render() {
+    console.log(this.state.dataSetValues)
     const { classes, open_sidebar } = this.props;
     const onEvents = {
       'click': this.onChartClick,
@@ -152,7 +149,7 @@ class ChartRender extends React.Component {
           </Typography>
           <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
           <ResponsiveContainer width="95%" height={400}>
-            <BarChart width={900} height={400} data={this.state.dataSet} maxBarSize={100} >
+            <BarChart width={900} height={400} data={this.state.dataSetValues} maxBarSize={100} >
               <XAxis dataKey="label" />
               <YAxis type="number" dx={0} width={100} />
               <CartesianGrid horizontal={true} vertical={false} />
@@ -161,9 +158,9 @@ class ChartRender extends React.Component {
               <Bar dataKey="value" fill="green" maxBarSize={100} onClick={(event) => {  this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
 
                 
-                <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} />
+                {/* <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} /> */}
                 {
-                  data.map((entry, index) => {
+                  this.state.dataSetValues.length>0 && this.state.dataSetValues.map((entry, index) => {
                     const color = Math.floor(Math.random() * 16777215).toString(16);
                     return <Cell key ={index} fill={`#${color}`} />;
                   })
@@ -181,7 +178,8 @@ class ChartRender extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  // open_sidebar: state.open_sidebar.open
+  
+  dataValues: state.dataValues.data
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

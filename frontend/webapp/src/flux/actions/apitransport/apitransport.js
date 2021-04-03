@@ -1,84 +1,122 @@
-import axios from 'axios';
-import C from '../constants';
-
-export default function dispatchAPI(api) {
-    if (api.reqType === 'MULTIPART') {
-        return dispatch => {
-            dispatch(apiStatusAsync(true, false, ''))
-            axios.create(api.getCustomConfigs()).put(api.apiEndPoint(), api.getFormData(), api.getHeaders())
-                .then(function (res) {
-                    api.processResponse(res.data)
-                    dispatch(apiStatusAsync(false, false, null))
-                    dispatch(dispatchAPIAsync(api));
-                })
-                .catch(function (err) {
-                    dispatch(apiStatusAsync(false, true, err.response && err.response.data && err.response.data.why && typeof err.response.data.why !== undefined ? err.response.data.why : 'Something Went Wrong...'))
-                });
-        }
-    }
-    else {
-        if (api.method === 'POST') {
-            return dispatch => {
-                dispatch(apiStatusAsync(true, false, ''))
-                axios.create(api.getCustomConfigs()).post(api.apiEndPoint(), api.getBody(), api.getHeaders())
-                    .then(function (res) {
-                        api.processResponse(res.data)
-                        if (res.data.http$ && res.data.http$.status === 403) {
-                            dispatch(apiStatusAsync(false, true, res.data.why))
-                        } else {
-                            dispatch(apiStatusAsync(false, false, null))
-                        }
-                        dispatch(dispatchAPIAsync(api));
-                        if (typeof api.getNextStep === 'function' && api.getNextStep()) {
-                            dispatch(api.getNextStep())
-                        }
-                    })
-                    .catch(function (err) {
-                        if (err && err.request && err.request.status === 0) {
-                            dispatch(apiStatusAsync(false, true, 'Network Error...Please try again...'))
-                        } else if (err && err.message && err.message.indexOf('timeout') !== -1) {
-                            dispatch(apiStatusAsync(false, true, 'Please try again...'))
-                        } else if (err && err.response && err.response.data && err.response.data.why && typeof err.response.data.why !== undefined) {
-                            dispatch(apiStatusAsync(false, true, err.response.data.why))
-                        } else if (err && err.request && err.request.status === 503) {
-                            dispatch(apiStatusAsync(false, true, 'Service Temporarily Unavailable'))
-                        } else {
-                            dispatch(apiStatusAsync(false, true, 'Something went wrong..'))
-                        }
-                    });
-            }
-        } else {
-            return dispatch => {
-                dispatch(apiStatusAsync(true, false, ''))
-                axios.get(api.apiEndPoint(), api.getHeaders())
-                    .then(function (res) {
-                        api.processResponse(res.data)
-                        dispatch(apiStatusAsync(false, false, null))
-                        dispatch(dispatchAPIAsync(api));
-                    })
-                    .catch(function (err) {
-                        dispatch(apiStatusAsync(false, true, 'api failed'))
-                    });
-            }
-        }
-    }
-}
+import axios from "axios";
+import C from "../constants";
+import Strings from "../strings";
 
 function dispatchAPIAsync(api) {
-    return {
-        type: api.type,
-        payload: api.getPayload()
-    }
+  return {
+    type: api.type,
+    payload: api.getPayload()
+  };
 }
 
-function apiStatusAsync(progress, error, message) {
+function apiStatusAsync(progress, errors, message, res = null, unauthrized = false, loading = false) {
+  if (res === null || !(res.status && res.status.statusCode && res.status.statusCode !== 200 && res.status.statusCode !== 201)) {
     return {
-        type: C.APISTATUS,
-        payload: {
-            progress: progress,
-            error: error,
-            message: message
-        }
+      type: C.APISTATUS,
+      payload: {
+        progress,
+        error: errors,
+        message: res && res.status && res.status.statusMessage ? res.status.statusMessage : message,
+        unauthrized: unauthrized,
+        loading: loading
+      }
+    };
+  }
+  return {
+    type: C.APISTATUS,
+    payload: {
+      progress,
+      error: res.status.statusCode === 200 || res.status.statusCode === 201,
+      message: res.status.statusCode === 200 || res.status.statusCode === 201 ? message : res.status.errorMessage,
+      unauthrized: unauthrized,
+      loading: loading
     }
+  };
 }
 
+function success(res, api, dispatch) {
+  api.processResponse(res.data);
+  dispatch(apiStatusAsync(false, false, api.successMsg, res.data, null, false));
+  if (api.type) {
+    dispatch(dispatchAPIAsync(api));
+  }
+  if (typeof api.processNextSuccessStep === "function" && res.status && (res.status === 200 || res.status === 201))
+    api.processNextSuccessStep(res.data);
+}
+
+function error(err, api, dispatch) {
+  let errorMsg = err.response && err.response.data && err.response.data.why ? err.response.data.why : Strings.error.message.http.default;
+  
+  if (api.errorMsg || api.errorMsg === null) {
+    errorMsg = api.errorMsg === null ? "" : api.errorMsg;
+  }
+  dispatch(apiStatusAsync(false, true, errorMsg, null, err.response && err.response.status === 401 ? true : false));
+  if (typeof api.processNextErrorStep === "function") {
+    api.processNextErrorStep();
+  }
+}
+
+export const updateMessage = apiStatusAsync;
+
+export default function dispatchAPI(api) {
+  if (api.reqType === "MULTIPART") {
+    return dispatch => {
+      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
+      axios
+        .post(api.apiEndPoint(), api.getFormData(), api.getHeaders())
+        .then(res => {
+          success(res, api, dispatch);
+        })
+        .catch(err => {
+          error(err, api, dispatch);
+        });
+    };
+  } else if (api.method === "POST") {
+    return dispatch => {
+      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, "", null, null, true));
+      axios
+        .post(api.apiEndPoint(), api.getBody(), api.getHeaders())
+        .then(res => {
+          success(res, api, dispatch);
+        })
+        .catch(err => {
+          error(err, api, dispatch);
+        });
+    };
+  } else if (api.method === "PUT") {
+    return dispatch => {
+      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
+      axios
+        .put(api.apiEndPoint(), api.getBody(), api.getHeaders())
+        .then(res => {
+          success(res, api, dispatch);
+        })
+        .catch(err => {
+          error(err, api, dispatch);
+        });
+    };
+  } else if (api.method === "DELETE") {
+    return dispatch => {
+      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
+      axios
+        .delete(api.apiEndPoint(), api.getHeaders())
+        .then(res => {
+          success(res, api, dispatch);
+        })
+        .catch(err => {
+          error(err, api, dispatch);
+        });
+    };
+  }
+  return dispatch => {
+    dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
+    axios
+      .get(api.apiEndPoint(), api.getHeaders())
+      .then(res => {
+        success(res, api, dispatch);
+      })
+      .catch(err => {
+        error(err, api, dispatch);
+      });
+  };
+}

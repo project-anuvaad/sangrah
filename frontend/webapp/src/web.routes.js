@@ -65,6 +65,17 @@ class AppRoutes extends React.Component {
               dontShowHeader={false}
 
             />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}`}
+              dontShowLoader
+              title={"Organization List"}
+              userRoles={["TRANSLATOR"]}
+              component={ChartRender}
+              authenticate={true}
+              currentMenu="organization-list"
+              dontShowHeader={false}
+
+            />
           </Switch>
         </div>
       </Router>
