@@ -12,12 +12,14 @@ language_extension = {'pu':'Punjabi',
                       'be':'Bengali',
                       'en':'English',
                       'ta':'Tamil', 
-                      'ml':'Malyalam', 
+                      'ml':'Malayalam', 
                       'te':'Telugu', 
                       'ka':'Kannada', 
                       'hi':'Hindi', 
                       'ma':'Marathi',
-                      'gu':'Gujarathi',
+                      'gu':'Gujarati',
+                      'od':'Odia',
+                      'bh':'Bhojpuri',
                       'as':'Assamese'}
 
 def get_key(val, lang_dict):
