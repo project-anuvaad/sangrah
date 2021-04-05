@@ -76,7 +76,7 @@ class ChartRender extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.dataValues !== this.props.dataValues) {
       if (this.props.dataValues.length > 0) {
-        let others = this.props.dataValues.slice(8, this.props.dataValues.length)
+        let others = this.props.dataValues.slice(7, this.props.dataValues.length)
         let othersCount = 0
         others.map(dataVal => {
           othersCount = dataVal.value + othersCount
@@ -91,7 +91,7 @@ class ChartRender extends React.Component {
         dataSetValues.push(obj)
         }
         
-        this.setState({ dataSetValues })
+        this.setState({ dataSetValues, originalValues: this.props.dataValues})
   
       }
       
@@ -106,7 +106,7 @@ class ChartRender extends React.Component {
   handleOnClick(value, event) {
     if (event && event.hasOwnProperty("label") && event.label === "Others") {
      this.setState({
-      dataSetValues: this.state.dataSetValues
+      dataSetValues: this.state.originalValues
      })
     } else {
       switch (value) {
@@ -180,7 +180,7 @@ class ChartRender extends React.Component {
 
 const mapStateToProps = state => ({
   
-  dataValues: state.dataValues.data
+  dataValues: state.dataValues
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
