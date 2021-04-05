@@ -5,7 +5,7 @@ from src.db import get_db
 from anuvaad_auditor.loghandler import log_info, log_exception
 import pymongo
 
-DB_SCHEMA_NAME  = 'dataset'
+DB_SCHEMA_NAME  = 'dataset_v1'
 
 class DatasetModel(object):
     def __init__(self):
