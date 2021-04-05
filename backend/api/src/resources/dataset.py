@@ -49,7 +49,7 @@ class DatasetSearchResource(Resource):
             log_info('Missing params in DatasetSearchResource {} missing: {}'.format(body, result), LOG_WITHOUT_CONTEXT)
             res = APIResponse(APIStatus.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
             return res.getresjson(), 400
-        search_result = {}
+        search_result = []
         try:
             status, search_result = summarizeDatasetRepo.search(result)
         except Exception as e:
