@@ -20,6 +20,7 @@ import Container from '@material-ui/core/Container';
 const theme = createMuiTheme();
 var randomColor = require('randomcolor');
 var jp = require('jsonpath')
+var colors = ["188efc","7a47a4","b93e94","1fc6a4","f46154","d088fd", "f3447d","188efc","f48734","189ac9","0e67bd"]
 
 class ChartRender extends React.Component {
   constructor(props) {
@@ -161,7 +162,7 @@ class ChartRender extends React.Component {
                 {/* <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} /> */}
                 {
                   this.state.dataSetValues.length>0 && this.state.dataSetValues.map((entry, index) => {
-                    const color = Math.floor(Math.random() * 16777215).toString(16);
+                    const color = colors[index < 9 ? index : index%10]
                     return <Cell key ={index} fill={`#${color}`} />;
                   })
                 }
