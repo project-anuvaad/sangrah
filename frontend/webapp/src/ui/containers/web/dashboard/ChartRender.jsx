@@ -76,16 +76,16 @@ class ChartRender extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.dataValues !== this.props.dataValues) {
       if (this.props.dataValues.length > 0) {
-        let others = this.props.dataValues.slice(10, this.props.dataValues.length)
+        let others = this.props.dataValues.slice(8, this.props.dataValues.length)
         let othersCount = 0
         others.map(dataVal => {
           othersCount = dataVal.value + othersCount
   
         })
   
-        let dataSetValues = this.props.dataValues.slice(0, 9)
+        let dataSetValues = this.props.dataValues.slice(0, 7)
         let obj = {}
-        if(this.props.dataValues.length > 9){
+        if(this.props.dataValues.length > 7){
           obj.value = othersCount
         obj.label = "Others"
         dataSetValues.push(obj)
@@ -112,11 +112,11 @@ class ChartRender extends React.Component {
       switch (value) {
         case 1:
           this.handleApiCall("parallel-corpus", "domain", [{"type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English"}, "targetLanguage": {      "type": "PARAMS",      "value": this.state.selectedLanguage ? this.state.selectedLanguage :event && event.hasOwnProperty("label") && event.label    }  }])
-          this.setState({ currentPage: value,dataSetValues:[], selectedLanguage:this.state.selectedLanguage ?this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label , title: "Number of parallel sentences (Domain basis)" })
+          this.setState({ currentPage: value,dataSetValues:[], selectedLanguage:this.state.selectedLanguage ?this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label , title: `Number of parallel English-${this.state.selectedLanguage ? this.state.selectedLanguage :event && event.hasOwnProperty("label") && event.label} sentences ` })
           break;
         case 2:
           this.handleApiCall("parallel-corpus" ,  "source",[{    "type": "PARAMS",    "sourceLanguage": {      "type": "PARAMS",      "value": "English"    },    "targetLanguage": {      "type": "PARAMS",      "value": this.state.selectedLanguage   }  }, {"type":"PARAMS", "value":event && event.hasOwnProperty("label") && event.label}])
-          this.setState({ currentPage: value,dataSetValues:[], title: "Number of parallel sentences (by source basis)" })
+          this.setState({ currentPage: value,dataSetValues:[], title: `Number of parallel English-${this.state.selectedLanguage} sentences from ${event && event.hasOwnProperty("label") && event.label}` })
           break;
         case 0:
           this.handleApiCall("parallel-corpus" , "languagePairs",[])
