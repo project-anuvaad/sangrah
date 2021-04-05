@@ -28,6 +28,6 @@ class SummarizeDataset(object):
     
     def get_validated_data(self, data):
         status, key = self.mandatory_params(data)
-        if status == False:
+        if not status:
             return status, key
         return True, data

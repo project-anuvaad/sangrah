@@ -1,5 +1,5 @@
 
-LOG_WITHOUT_CONTEXT = {'metadata':{'module':'REST-BE'}}
+LOG_WITHOUT_CONTEXT = {'metadata': {'module': 'REST-BE'}}
 
 def init():
     global app_context

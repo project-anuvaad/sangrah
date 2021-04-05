@@ -9,30 +9,28 @@ from src.models.api_response import APIResponse
 from src.models.api_status import APIStatus
 from src.repositories import DatasetRepo, SummarizeDatasetRepo
 
-datasetRepo             = DatasetRepo()
-summarizeDatasetRepo    = SummarizeDatasetRepo()
+datasetRepo = DatasetRepo()
+summarizeDatasetRepo = SummarizeDatasetRepo()
+
 
 class ParallelCorpusCreateResource(Resource):
     def post(self):
-        body        = request.get_json()
-
-        appParallelCorpusObj    = AppParallelDataset()
-        appSummarizeDataset     = AppSummarizeDataset()
-        status, result          = appParallelCorpusObj.get_validated_dataset(body)
-        if status == False:
-            log_info('Missing params in ParallelCorpusCreateResource {} missing: {}'.format(body, key), LOG_WITHOUT_CONTEXT)
+        body = request.get_json()
+        appParallelCorpusObj = AppParallelDataset()
+        appSummarizeDataset = AppSummarizeDataset()
+        status, result = appParallelCorpusObj.get_validated_dataset(body)
+        if not status:
+            log_info('Missing params in ParallelCorpusCreateResource {} missing: {}'.format(body, key),
+                     LOG_WITHOUT_CONTEXT)
             res = APIResponse(APIStatus.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
             return res.getresjson(), 400
-        
-
         search_result = {}
         try:
-            search_result       = datasetRepo.store_parallel_corpus_dataset(result)
-            tags                = appParallelCorpusObj.get_tags(body)
+            search_result = datasetRepo.store_parallel_corpus_dataset(result)
+            tags = appParallelCorpusObj.get_tags(body)
             log_info('dataset tags {}'.format(tags), LOG_WITHOUT_CONTEXT)
-            summarize_result    = appSummarizeDataset.create(search_result, tags)
+            summarize_result = appSummarizeDataset.create(search_result, tags)
             summarizeDatasetRepo.store_summarize_dataset(summarize_result)
-
         except Exception as e:
             log_exception("Exception at ParallelCorpusCreateResource ", LOG_WITHOUT_CONTEXT, e)
             res = APIResponse(APIStatus.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
@@ -41,25 +39,22 @@ class ParallelCorpusCreateResource(Resource):
         res = APIResponse(APIStatus.SUCCESS.value, search_result)
         return res.getres()
 
+
 class DatasetSearchResource(Resource):
     def post(self):
-        body        = request.get_json()
-        appSummarizeDataset     = AppSummarizeDataset()
-
-        status, result          = appSummarizeDataset.get_validated_data(body)
-        if status == False:
-            log_info('Missing params in DatasetSearchResource {} missing: {}'.format(body, key), LOG_WITHOUT_CONTEXT)
+        body = request.get_json()
+        appSummarizeDataset = AppSummarizeDataset()
+        status, result = appSummarizeDataset.get_validated_data(body)
+        if not status:
+            log_info('Missing params in DatasetSearchResource {} missing: {}'.format(body, result), LOG_WITHOUT_CONTEXT)
             res = APIResponse(APIStatus.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
             return res.getresjson(), 400
-        
-        search_result = []
+        search_result = {}
         try:
-            status, search_result   = summarizeDatasetRepo.search(result)
-            
+            status, search_result = summarizeDatasetRepo.search(result)
         except Exception as e:
             log_exception("Exception at DatasetSearchResource ", LOG_WITHOUT_CONTEXT, e)
             res = APIResponse(APIStatus.ERR_GLOBAL_MISSING_PARAMETERS.value, None)
             return res.getresjson(), 400
-
         res = APIResponse(APIStatus.SUCCESS.value, search_result)
         return res.getres()
