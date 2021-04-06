@@ -27,6 +27,7 @@ import themeAnuvaad from "../../../theme/web/theme-default";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
+import { isMobile } from 'react-device-detect';
 
 const styles = {
     container: {},
@@ -97,14 +98,14 @@ class ChartRenderHeader extends React.Component {
                                         <IconButton id="menu" style={{ fontSize: "20px" }}
                                             onClick={() => this.props.handleOnClick(this.props.currentPage - 1)}
                                             className={classes.menuButton} color="inherit" aria-label="Menu">
-                                            <MenuIcon fontSize="large" />
+                                            <MenuIcon fontSize={ isMobile ? "small" : "large" }/>
                                         </IconButton>
                                         <div style={{ borderLeft: "1px solid #D6D6D6", height: "40px", marginRight: "10px", marginTop: "6px" }}></div>
 
                                     </div>
                                 }
                                 <div>
-                                    <Typography variant="h4" style={{ position: 'absolute', left: '60px', top: "10%" }}>
+                                    <Typography variant={isMobile? "h5" : "h4"} style={{ position: 'absolute', left: '60px', top: isMobile ? "13px" : "10%" }}>
                                         Sangrah
                                         </Typography>
                                 </div>

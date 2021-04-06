@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ChartStyles from "../../../styles/web/chartStyles";
-import {ResponsiveContainer,
+import {
+  ResponsiveContainer,
   BarChart, Bar, Brush, Cell, CartesianGrid, ReferenceLine, ReferenceArea,
   XAxis, YAxis, Tooltip, Legend, ErrorBar, LabelList, Rectangle
 } from 'recharts';
@@ -17,10 +18,11 @@ import { showSidebar } from '../../../../flux/actions/apis/common/showSidebar';
 import FetchLanguageDataSets from "../../../../flux/actions/apis/dashboard/languageDatasets";
 import ChartRenderHeader from "./ChartRenderHeader"
 import Container from '@material-ui/core/Container';
+
 const theme = createMuiTheme();
 var randomColor = require('randomcolor');
 var jp = require('jsonpath')
-var colors = ["188efc","7a47a4","b93e94","1fc6a4","f46154","d088fd", "f3447d","188efc","f48734","189ac9","0e67bd"]
+var colors = ["188efc", "7a47a4", "b93e94", "1fc6a4", "f46154", "d088fd", "f3447d", "188efc", "f48734", "189ac9", "0e67bd"]
 
 class ChartRender extends React.Component {
   constructor(props) {
@@ -66,11 +68,11 @@ class ChartRender extends React.Component {
   }
 
   componentDidMount() {
-   
-    
 
-    this.handleApiCall("parallel-corpus" , "languagePairs",[])
-    
+
+
+    this.handleApiCall("parallel-corpus", "languagePairs", [])
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -80,47 +82,47 @@ class ChartRender extends React.Component {
         let othersCount = 0
         others.map(dataVal => {
           othersCount = dataVal.value + othersCount
-  
+
         })
-  
+
         let dataSetValues = this.props.dataValues.slice(0, 7)
         let obj = {}
-        if(this.props.dataValues.length > 7){
+        if (this.props.dataValues.length > 7) {
           obj.value = othersCount
-        obj.label = "Others"
-        dataSetValues.push(obj)
+          obj.label = "Others"
+          dataSetValues.push(obj)
         }
-        
-        this.setState({ dataSetValues, originalValues: this.props.dataValues})
-  
+
+        this.setState({ dataSetValues, originalValues: this.props.dataValues })
+
       }
-      
+
     }
   }
 
-  handleApiCall =(dataType,value,criterions)=>{
-    const apiObj = new FetchLanguageDataSets(dataType,value,criterions);
-      this.props.APITransport(apiObj);
+  handleApiCall = (dataType, value, criterions) => {
+    const apiObj = new FetchLanguageDataSets(dataType, value, criterions);
+    this.props.APITransport(apiObj);
   }
 
   handleOnClick(value, event) {
     if (event && event.hasOwnProperty("label") && event.label === "Others") {
-     this.setState({
-      dataSetValues: this.state.originalValues
-     })
+      this.setState({
+        dataSetValues: this.state.originalValues
+      })
     } else {
       switch (value) {
         case 1:
-          this.handleApiCall("parallel-corpus", "domain", [{"type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English"}, "targetLanguage": {      "type": "PARAMS",      "value": this.state.selectedLanguage ? this.state.selectedLanguage :event && event.hasOwnProperty("label") && event.label    }  }])
-          this.setState({ currentPage: value,dataSetValues:[], selectedLanguage:this.state.selectedLanguage ?this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label , title: `Number of parallel English-${this.state.selectedLanguage ? this.state.selectedLanguage :event && event.hasOwnProperty("label") && event.label} sentences ` })
+          this.handleApiCall("parallel-corpus", "domain", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label } }])
+          this.setState({ currentPage: value, dataSetValues: [], selectedLanguage: this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label, title: `Number of parallel English-${this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label} sentences ` })
           break;
         case 2:
-          this.handleApiCall("parallel-corpus" ,  "source",[{    "type": "PARAMS",    "sourceLanguage": {      "type": "PARAMS",      "value": "English"    },    "targetLanguage": {      "type": "PARAMS",      "value": this.state.selectedLanguage   }  }, {"type":"PARAMS", "value":event && event.hasOwnProperty("label") && event.label}])
-          this.setState({ currentPage: value,dataSetValues:[], title: `Number of parallel English-${this.state.selectedLanguage} sentences from ${event && event.hasOwnProperty("label") && event.label}` })
+          this.handleApiCall("parallel-corpus", "source", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage } }, { "type": "PARAMS", "value": event && event.hasOwnProperty("label") && event.label }])
+          this.setState({ currentPage: value, dataSetValues: [], title: `Number of parallel English-${this.state.selectedLanguage} sentences from ${event && event.hasOwnProperty("label") && event.label}` })
           break;
         case 0:
-          this.handleApiCall("parallel-corpus" , "languagePairs",[])
-          this.setState({ currentPage: value,selectedLanguage:'',dataSetValues:[], title: "Number of parallel sentences per language with English" })
+          this.handleApiCall("parallel-corpus", "languagePairs", [])
+          this.setState({ currentPage: value, selectedLanguage: '', dataSetValues: [], title: "Number of parallel sentences per language with English" })
           break;
 
       }
@@ -136,50 +138,51 @@ class ChartRender extends React.Component {
     }
     this.getData()
     return (
-       
+
       <Container>
         <div className={classes.div}>
-        <ChartRenderHeader
-          handleOnClick={this.handleOnClick.bind(this)}
-          currentPage={this.state.currentPage}
+          <ChartRenderHeader
+            handleOnClick={this.handleOnClick.bind(this)}
+            currentPage={this.state.currentPage}
 
-        />
-       
-          <Typography value="" variant="h4" className={classes.typographyHeader}>
-            {this.state.title}
-          </Typography>
+          />
+          <div style={{textAlign: "center", paddingBottom: "5%"}}>
+            <Typography value="" variant="h4" className={classes.typographyHeader}>
+              {this.state.title}
+            </Typography>
+          </div>
           <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
-          <ResponsiveContainer width="95%" height={400}>
-            <BarChart width={900} height={400} data={this.state.dataSetValues} maxBarSize={100} >
-              <XAxis dataKey="label" />
-              <YAxis type="number" dx={0} width={100} />
-              <CartesianGrid horizontal={true} vertical={false} />
+            <ResponsiveContainer width="95%" height={400}>
+              <BarChart width={900} height={400} data={this.state.dataSetValues} maxBarSize={100} >
+                <XAxis dataKey="label" />
+                <YAxis type="number" dx={0} width={100} />
+                <CartesianGrid horizontal={true} vertical={false} />
 
-              <Tooltip />
-              <Bar dataKey="value" radius={[12, 12, 0, 0]} maxBarSize={100} onClick={(event) => {  this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
+                <Tooltip />
+                <Bar dataKey="value" radius={[12, 12, 0, 0]} maxBarSize={100} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
 
-                
-                {/* <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} /> */}
-                {
-                  this.state.dataSetValues.length>0 && this.state.dataSetValues.map((entry, index) => {
-                    const color = colors[index < 9 ? index : index%10]
-                    return <Cell key ={index} fill={`#${color}`} />;
-                  })
-                }
-              </Bar>
-            </BarChart>
+
+                  {/* <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} /> */}
+                  {
+                    this.state.dataSetValues.length > 0 && this.state.dataSetValues.map((entry, index) => {
+                      const color = colors[index < 9 ? index : index % 10]
+                      return <Cell key={index} fill={`#${color}`} />;
+                    })
+                  }
+                </Bar>
+              </BarChart>
             </ResponsiveContainer>
           </Paper>
         </div>
-        </Container>
-        
+      </Container>
+
 
     )
   }
 }
 
 const mapStateToProps = state => ({
-  
+
   dataValues: state.dataValues
 });
 

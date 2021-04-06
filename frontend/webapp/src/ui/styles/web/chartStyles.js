@@ -17,7 +17,7 @@ const FileUploadStyles = theme => ({
     },
     typographyHeader:{
      
-      fontSize: 12,
+      fontSize: 20,
   '@media (min-width:600px)': {
     fontSize: 36,
   }
