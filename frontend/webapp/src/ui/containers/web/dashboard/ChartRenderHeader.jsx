@@ -71,14 +71,6 @@ const styles = {
 };
 
 class ChartRenderHeader extends React.Component {
-    // state = {
-    //     auth: true,
-    //     anchorEl: null,
-    //     heading: translate('header.page.heading.translation'),
-    //     name: localStorage.getItem("userDetails"),
-    //     userName: "",
-    //     currentPage: 'dashboard'
-    // };
 
     render() {
         const { classes, open_sidebar } = this.props;
@@ -86,13 +78,13 @@ class ChartRenderHeader extends React.Component {
         return (
             <div>
                 <div>
-                    <AppBar position="fixed" color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)} style={{ height: '50px', padding: "0% 1%" }}>
+                    <AppBar position="fixed" color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)} style={{ height: '50px', padding: "0% 2%" }}>
 
                         <Toolbar disableGutters={!open_sidebar} style={{ minHeight: "50px" }}>
 
 
                             <div style={{ display: "flex", flexDirection: "row" }}>
-                                {this.props.currentPage !== 0
+                                {/* {this.props.currentPage !== 0
                                     &&
                                     <div style={{display: "flex", flexDirection: "row", width: '5%'}}>
                                         <IconButton id="menu" style={{ fontSize: "20px" }}
@@ -103,9 +95,9 @@ class ChartRenderHeader extends React.Component {
                                         <div style={{ borderLeft: "1px solid #D6D6D6", height: "40px", marginRight: "10px", marginTop: "6px" }}></div>
 
                                     </div>
-                                }
+                                } */}
                                 <div>
-                                    <Typography variant={isMobile? "h5" : "h4"} style={{ position: 'absolute', left: '60px', top: isMobile ? "13px" : "10%" }}>
+                                    <Typography variant={isMobile? "h5" : "h4"} >
                                         Sangrah
                                         </Typography>
                                 </div>

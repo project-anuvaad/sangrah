@@ -170,7 +170,11 @@ class ChartRender extends React.Component {
     }
 
     handleCardNavigation = () => {
-        this.fetchChartData()
+        if (this.state.cardNavigation) {
+            this.fetchChartData()
+        } else {
+            this.handleOnClick(this.state.currentPage - 1)
+        }
     }
 
     handleLanguageChange = (event, value) => {
@@ -211,6 +215,7 @@ class ChartRender extends React.Component {
             'legendselectchanged': this.onChartLegendselectchanged
         }
         this.getData()
+
         return (
 
             <Container>
@@ -229,6 +234,9 @@ class ChartRender extends React.Component {
                         {this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
                     </div>
                     <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
+                        {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 && <div style={{ paddingBottom: "3%", textAlign: "right" }}>
+                            <Button color="primary" size="medium" variant="contained" style={{ textTransform: "capitalize" }} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
+                        </div>}
                         <ResponsiveContainer width="95%" height={400}>
                             <BarChart width={900} height={400} data={this.state.dataSetValues} maxBarSize={100} >
                                 <XAxis dataKey="label"
@@ -253,9 +261,7 @@ class ChartRender extends React.Component {
                                 </Bar>
                             </BarChart>
                         </ResponsiveContainer>
-                        {this.state.cardNavigation && this.state.dataSetValues && this.state.dataSetValues.length > 0 && <div style={{ padding: "3%", textAlign: "center" }}>
-                            <Button color="primary" size="medium" style={{ textTransform: "capitalize" }} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Previous</Button>
-                        </div>}
+
                     </Paper>
                 </div>
             </Container>
