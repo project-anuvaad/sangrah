@@ -36,6 +36,7 @@ class ChartRender extends React.Component {
             word: "",
             currentPage: 0,
             dataSetValues: [],
+            filterValue:'domain',
             title: "Number of parallel sentences per language with English"
         }
 
@@ -172,28 +173,28 @@ class ChartRender extends React.Component {
         this.fetchChartData()
     }
 
-    handleLanguageChange = () => {
-
+    handleLanguageChange = (event,value) => {
+        this.setState({filterValue:value})
     }
 
     fetchLanuagePairButtons() {
         return (
             <div>
                 <ToggleButtonGroup
-                    value={"Test1"}
+                    value={this.state.filterValue}
                     exclusive
                     onChange={this.handleLanguageChange}
                     aria-label="text alignment"
-                    coloe="primary"
+                    color="primary"
                 >
-                    <ToggleButton value="Test1" aria-label="left aligned" color="primary" >
-                       Test1
+                    <ToggleButton value="domain" aria-label="left aligned" color="primary" >
+                       Domain
                     </ToggleButton>
-                    <ToggleButton value="Test2" aria-label="centered" color="primary">
-                       Test2
+                    <ToggleButton value="source" aria-label="centered" color="primary">
+                       Source
                     </ToggleButton>
-                    <ToggleButton value="Test3" aria-label="right aligned" color="primary">
-                        Test2
+                    <ToggleButton value="collectionMethod" aria-label="right aligned" color="primary">
+                        Collection Method
                     </ToggleButton>
                 </ToggleButtonGroup>
             </div>
