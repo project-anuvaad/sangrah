@@ -21,7 +21,8 @@ import Container from '@material-ui/core/Container';
 import { isMobile } from 'react-device-detect';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ArrowBack';
-
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 const theme = createMuiTheme();
 var randomColor = require('randomcolor');
 var jp = require('jsonpath')
@@ -127,6 +128,11 @@ class ChartRender extends React.Component {
 
             this.setState({ dataSetValues, originalValues: this.props.dataValues })
 
+            if (this.state.cardNavigation) {
+                this.setState({
+                    cardNavigation: false
+                })
+            }
         }
 
     }
@@ -166,6 +172,34 @@ class ChartRender extends React.Component {
         this.fetchChartData()
     }
 
+    handleLanguageChange = () => {
+
+    }
+
+    fetchLanuagePairButtons() {
+        return (
+            <div>
+                <ToggleButtonGroup
+                    value={"Test1"}
+                    exclusive
+                    onChange={this.handleLanguageChange}
+                    aria-label="text alignment"
+                    coloe="primary"
+                >
+                    <ToggleButton value="Test1" aria-label="left aligned" color="primary" >
+                       Test1
+                    </ToggleButton>
+                    <ToggleButton value="Test2" aria-label="centered" color="primary">
+                       Test2
+                    </ToggleButton>
+                    <ToggleButton value="Test3" aria-label="right aligned" color="primary">
+                        Test2
+                    </ToggleButton>
+                </ToggleButtonGroup>
+            </div>
+        )
+    }
+
     render() {
         console.log(this.state.dataSetValues)
         const { classes, open_sidebar } = this.props;
@@ -187,6 +221,9 @@ class ChartRender extends React.Component {
                         <Typography value="" variant="h4" className={classes.typographyHeader}>
                             {this.state.title}
                         </Typography>
+                    </div>
+                    <div>
+                           { this.fetchLanuagePairButtons()}
                     </div>
                     <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
                         <ResponsiveContainer width="95%" height={400}>
@@ -213,8 +250,8 @@ class ChartRender extends React.Component {
                                 </Bar>
                             </BarChart>
                         </ResponsiveContainer>
-                       { this.state.cardNavigation && <div style={{padding: "3%", textAlign: "center"}}>
-                            <Button color="primary" size="medium" style={{textTransform: "capitalize"}} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Previous</Button>
+                        {this.state.cardNavigation && this.state.dataSetValues && this.state.dataSetValues.length > 0 && <div style={{ padding: "3%", textAlign: "center" }}>
+                            <Button color="primary" size="medium" style={{ textTransform: "capitalize" }} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Previous</Button>
                         </div>}
                     </Paper>
                 </div>
