@@ -47,7 +47,7 @@ const FileUploadStyles = theme => ({
     },
    paper: {
     
-      width: "95%",
+      width: "94%",
       minWidth: "250px",
       marginTop: "2%",
       marginBottom:'1%',

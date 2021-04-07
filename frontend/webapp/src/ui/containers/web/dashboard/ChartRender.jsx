@@ -36,7 +36,7 @@ class ChartRender extends React.Component {
             word: "",
             currentPage: 0,
             dataSetValues: [],
-            filterValue:'domain',
+            filterValue: 'domain',
             title: "Number of parallel sentences per language with English"
         }
 
@@ -153,11 +153,11 @@ class ChartRender extends React.Component {
         } else {
             switch (value) {
                 case 1:
-                    this.handleApiCall("parallel-corpus",filterValue ?filterValue : this.state.filterValue, [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label } }])
+                    this.handleApiCall("parallel-corpus", filterValue ? filterValue : this.state.filterValue, [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label } }])
                     this.setState({ currentPage: value, dataSetValues: [], selectedLanguage: this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label, title: `Number of parallel English-${this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label} sentences ` })
                     break;
                 case 2:
-                    this.handleApiCall("parallel-corpus", this.state.filterValue =="source" ? "domain":"source", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage } }, { "type": "PARAMS", "value": event && event.hasOwnProperty("label") && event.label }])
+                    this.handleApiCall("parallel-corpus", this.state.filterValue == "source" ? "domain" : "source", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage } }, { "type": "PARAMS", "value": event && event.hasOwnProperty("label") && event.label }])
                     this.setState({ currentPage: value, dataSetValues: [], title: `Number of parallel English-${this.state.selectedLanguage} sentences from ${event && event.hasOwnProperty("label") && event.label}` })
                     break;
                 case 0:
@@ -173,14 +173,15 @@ class ChartRender extends React.Component {
         this.fetchChartData()
     }
 
-    handleLanguageChange = (event,value) => {
-        this.setState({filterValue:value})
-        this.handleOnClick(1,"",value)
+    handleLanguageChange = (event, value) => {
+        this.setState({ filterValue: value })
+        this.handleOnClick(1, "", value)
     }
 
     fetchLanuagePairButtons() {
+
         return (
-            <div>
+            <div >
                 <ToggleButtonGroup
                     value={this.state.filterValue}
                     exclusive
@@ -188,13 +189,13 @@ class ChartRender extends React.Component {
                     aria-label="text alignment"
                     color="primary"
                 >
-                    <ToggleButton value="domain" aria-label="left aligned" color="primary" >
-                       Domain
+                    <ToggleButton value="domain" aria-label="left aligned" color="primary" style={this.state.filterValue === "domain" ? { backgroundColor: "#1c9ab7", color: "white" } : { color: "black" }} >
+                        Domain
                     </ToggleButton>
-                    <ToggleButton value="source" aria-label="centered" color="primary">
-                       Source
+                    <ToggleButton value="source" aria-label="centered" color="primary" style={this.state.filterValue === "source" ? { backgroundColor: "#1c9ab7", color: "white" } : { color: "black" }}>
+                        Source
                     </ToggleButton>
-                    <ToggleButton value="collectionMethod" aria-label="right aligned" color="primary">
+                    <ToggleButton value="collectionMethod" aria-label="right aligned" color="primary" style={this.state.filterValue === "collectionMethod" ? { backgroundColor: "#1c9ab7", color: "white" } : { color: "black" }}>
                         Collection Method
                     </ToggleButton>
                 </ToggleButtonGroup>
@@ -224,8 +225,8 @@ class ChartRender extends React.Component {
                             {this.state.title}
                         </Typography>
                     </div>
-                    <div>
-                           { this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
+                    <div style={{ display: "flex", flexDirection: "row-reverse", width: "100%" }}>
+                        {this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
                     </div>
                     <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
                         <ResponsiveContainer width="95%" height={400}>
