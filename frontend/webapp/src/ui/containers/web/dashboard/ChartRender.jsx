@@ -19,6 +19,8 @@ import FetchLanguageDataSets from "../../../../flux/actions/apis/dashboard/langu
 import ChartRenderHeader from "./ChartRenderHeader"
 import Container from '@material-ui/core/Container';
 import { isMobile } from 'react-device-detect';
+import Button from '@material-ui/core/Button';
+import BackIcon from '@material-ui/icons/ArrowBack';
 
 const theme = createMuiTheme();
 var randomColor = require('randomcolor');
@@ -79,26 +81,54 @@ class ChartRender extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.dataValues !== this.props.dataValues) {
             if (this.props.dataValues.length > 0) {
-                let others = this.props.dataValues.slice(7, this.props.dataValues.length)
-                let othersCount = 0
-                others.map(dataVal => {
-                    othersCount = dataVal.value + othersCount
+                // let others = this.props.dataValues.slice(7, this.props.dataValues.length)
+                // let othersCount = 0
+                // others.map(dataVal => {
+                //     othersCount = dataVal.value + othersCount
 
-                })
+                // })
 
-                let dataSetValues = this.props.dataValues.slice(0, 7)
-                let obj = {}
-                if (this.props.dataValues.length > 7) {
-                    obj.value = othersCount
-                    obj.label = "Others"
-                    dataSetValues.push(obj)
-                }
+                // let dataSetValues = this.props.dataValues.slice(0, 7)
+                // let obj = {}
+                // let cardNavigation = false
 
-                this.setState({ dataSetValues, originalValues: this.props.dataValues })
+                // if (this.props.dataValues.length > 7) {
+                //     obj.value = othersCount
+                //     obj.label = "Others"
+                //     dataSetValues.push(obj)
 
+                //     cardNavigation = true
+                // }
+
+                // this.setState({ dataSetValues, originalValues: this.props.dataValues, cardNavigation })
+                this.fetchChartData()
             }
 
         }
+    }
+
+    fetchChartData() {
+        if (this.props.dataValues.length > 0) {
+            let others = this.props.dataValues.slice(7, this.props.dataValues.length)
+            let othersCount = 0
+            others.map(dataVal => {
+                othersCount = dataVal.value + othersCount
+
+            })
+
+            let dataSetValues = this.props.dataValues.slice(0, 7)
+            let obj = {}
+
+            if (this.props.dataValues.length > 7) {
+                obj.value = othersCount
+                obj.label = "Others"
+                dataSetValues.push(obj)
+            }
+
+            this.setState({ dataSetValues, originalValues: this.props.dataValues })
+
+        }
+
     }
 
     handleApiCall = (dataType, value, criterions) => {
@@ -108,8 +138,10 @@ class ChartRender extends React.Component {
 
     handleOnClick(value, event) {
         if (event && event.hasOwnProperty("label") && event.label === "Others") {
+            let others = this.props.dataValues.slice(7, this.props.dataValues.length)
             this.setState({
-                dataSetValues: this.state.originalValues
+                dataSetValues: others,
+                cardNavigation: true
             })
         } else {
             switch (value) {
@@ -130,6 +162,10 @@ class ChartRender extends React.Component {
         }
     }
 
+    handleCardNavigation = () => {
+        this.fetchChartData()
+    }
+
     render() {
         console.log(this.state.dataSetValues)
         const { classes, open_sidebar } = this.props;
@@ -147,7 +183,7 @@ class ChartRender extends React.Component {
                         currentPage={this.state.currentPage}
 
                     />
-                    <div style={{ textAlign: "center", paddingBottom: isMobile ? "0" : "5%" }}>
+                    <div style={{ textAlign: "center", paddingBottom: isMobile ? "0" : "3%" }}>
                         <Typography value="" variant="h4" className={classes.typographyHeader}>
                             {this.state.title}
                         </Typography>
@@ -156,11 +192,11 @@ class ChartRender extends React.Component {
                         <ResponsiveContainer width="95%" height={400}>
                             <BarChart width={900} height={400} data={this.state.dataSetValues} maxBarSize={100} >
                                 <XAxis dataKey="label"
-                                    textAnchor={ isMobile ? "end" : "middle"}
+                                    textAnchor={isMobile ? "end" : "middle"}
                                     tick={{ angle: isMobile ? -90 : 0 }} height={isMobile ? 100 : 20}
                                     interval={0}
                                 />
-                                <YAxis type="number" dx={0}  />
+                                <YAxis type="number" dx={0} />
                                 <CartesianGrid horizontal={true} vertical={false} />
 
                                 <Tooltip />
@@ -177,6 +213,9 @@ class ChartRender extends React.Component {
                                 </Bar>
                             </BarChart>
                         </ResponsiveContainer>
+                       { this.state.cardNavigation && <div style={{padding: "3%", textAlign: "center"}}>
+                            <Button color="primary" size="medium" style={{textTransform: "capitalize"}} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Previous</Button>
+                        </div>}
                     </Paper>
                 </div>
             </Container>
