@@ -143,7 +143,7 @@ class ChartRender extends React.Component {
         this.props.APITransport(apiObj);
     }
 
-    handleOnClick(value, event) {
+    handleOnClick(value, event, filterValue) {
         if (event && event.hasOwnProperty("label") && event.label === "Others") {
             let others = this.props.dataValues.slice(7, this.props.dataValues.length)
             this.setState({
@@ -153,11 +153,11 @@ class ChartRender extends React.Component {
         } else {
             switch (value) {
                 case 1:
-                    this.handleApiCall("parallel-corpus", "domain", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label } }])
+                    this.handleApiCall("parallel-corpus",filterValue ?filterValue : this.state.filterValue, [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label } }])
                     this.setState({ currentPage: value, dataSetValues: [], selectedLanguage: this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label, title: `Number of parallel English-${this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label} sentences ` })
                     break;
                 case 2:
-                    this.handleApiCall("parallel-corpus", "source", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage } }, { "type": "PARAMS", "value": event && event.hasOwnProperty("label") && event.label }])
+                    this.handleApiCall("parallel-corpus", this.state.filterValue =="source" ? "domain":"source", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage } }, { "type": "PARAMS", "value": event && event.hasOwnProperty("label") && event.label }])
                     this.setState({ currentPage: value, dataSetValues: [], title: `Number of parallel English-${this.state.selectedLanguage} sentences from ${event && event.hasOwnProperty("label") && event.label}` })
                     break;
                 case 0:
@@ -175,6 +175,7 @@ class ChartRender extends React.Component {
 
     handleLanguageChange = (event,value) => {
         this.setState({filterValue:value})
+        this.handleOnClick(1,"",value)
     }
 
     fetchLanuagePairButtons() {
@@ -224,7 +225,7 @@ class ChartRender extends React.Component {
                         </Typography>
                     </div>
                     <div>
-                           { this.fetchLanuagePairButtons()}
+                           { this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
                     </div>
                     <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
                         <ResponsiveContainer width="95%" height={400}>
