@@ -154,15 +154,15 @@ class ChartRender extends React.Component {
             switch (value) {
                 case 1:
                     this.handleApiCall("parallel-corpus", filterValue ? filterValue : this.state.filterValue, [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label } }])
-                    this.setState({ currentPage: value, dataSetValues: [], selectedLanguage: this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label, title: `English-${this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label}  parallel corpus - Grouped by ${(filterValue=="domain") ? "Domain" : (filterValue=="source") ? "Source" : filterValue=="collectionMethod" ?"Collection Method":"Domain"}` })
+                    this.setState({ currentPage: value, dataSetValues: [], selectedLanguage: this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label, title: `English-${this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label}  parallel corpus - Grouped by ${(filterValue == "domain") ? "Domain" : (filterValue == "source") ? "Source" : filterValue == "collectionMethod" ? "Collection Method" : "Domain"}` })
                     break;
                 case 2:
                     this.handleApiCall("parallel-corpus", this.state.filterValue == "source" ? "domain" : "source", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage } }, { "type": "PARAMS", "value": event && event.hasOwnProperty("label") && event.label }])
-                    this.setState({ currentPage: value, dataSetValues: [], title: `English-${this.state.selectedLanguage} parallel corpus`,filterValue :'domain' })
+                    this.setState({ currentPage: value, dataSetValues: [], title: `English-${this.state.selectedLanguage} parallel corpus`, filterValue: 'domain' })
                     break;
                 case 0:
                     this.handleApiCall("parallel-corpus", "languagePairs", [])
-                    this.setState({ currentPage: value,filterValue :'domain', selectedLanguage: '', dataSetValues: [], title: "English-Indic language parallel corpus" })
+                    this.setState({ currentPage: value, filterValue: 'domain', selectedLanguage: '', dataSetValues: [], title: "English-Indic language parallel corpus" })
                     break;
 
             }
@@ -185,7 +185,7 @@ class ChartRender extends React.Component {
     fetchLanuagePairButtons() {
 
         return (
-            <div style={ isMobile ? { padding: "3% 0%" }:{}}>
+            <div style={isMobile ? { padding: "3% 0%" } : {}}>
                 <ToggleButtonGroup
                     value={this.state.filterValue}
                     exclusive
@@ -234,9 +234,11 @@ class ChartRender extends React.Component {
                         {this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
                     </div>
                     <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
-                        {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 && <div style={{ paddingBottom: "3%", textAlign: "right" }}>
-                            <Button color="primary" size="medium" variant="contained" style={{ textTransform: "capitalize" }} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
-                        </div>}
+                        <div style={{ paddingBottom: "3%", textAlign: "right", minHeight: "30px" }}>
+                            {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&
+                                <Button color="primary" size="medium" variant="contained" style={{ textTransform: "capitalize" }} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
+                            }
+                        </div>
                         <ResponsiveContainer width="95%" height={400}>
                             <BarChart width={900} height={400} data={this.state.dataSetValues} maxBarSize={100} >
                                 <XAxis dataKey="label"
