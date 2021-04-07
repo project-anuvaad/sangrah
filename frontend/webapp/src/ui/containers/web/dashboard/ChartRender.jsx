@@ -185,7 +185,7 @@ class ChartRender extends React.Component {
     fetchLanuagePairButtons() {
 
         return (
-            <div style={ isMobile && { padding: "3% 0%" }}>
+            <div style={ isMobile ? { padding: "3% 0%" }:{}}>
                 <ToggleButtonGroup
                     value={this.state.filterValue}
                     exclusive

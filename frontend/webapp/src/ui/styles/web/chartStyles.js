@@ -13,7 +13,7 @@ const FileUploadStyles = theme => ({
       marginTop: theme.spacing(2)
     },
     div:{
-      display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', paddingTop: isMobile ? "0%" : "5%", width:'100%'
+      display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', paddingTop: isMobile ? "0%" : "2%", width:'100%'
     },
     typographyHeader:{
      
