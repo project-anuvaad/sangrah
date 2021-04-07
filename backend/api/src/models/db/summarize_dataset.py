@@ -106,6 +106,10 @@ class SummarizeDatasetModel(object):
                 unique_values = collections.find().distinct('domain')
                 for unique in unique_values:
                     unique_set.update(unique['value'])
+            elif dataset['groupby']['value'] == 'collectionMethod':
+                unique_values = collections.find().distinct('collectionMethod')
+                for unique in unique_values:
+                    unique_set.update(unique['value'])
             else:
                 return []
         # print(unique_set)
