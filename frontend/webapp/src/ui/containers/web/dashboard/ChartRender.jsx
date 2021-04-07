@@ -158,11 +158,11 @@ class ChartRender extends React.Component {
                     break;
                 case 2:
                     this.handleApiCall("parallel-corpus", this.state.filterValue == "source" ? "domain" : "source", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage } }, { "type": "PARAMS", "value": event && event.hasOwnProperty("label") && event.label }])
-                    this.setState({ currentPage: value, dataSetValues: [], title: `English-${this.state.selectedLanguage} parallel corpus - Grouped by ${event && event.hasOwnProperty("label") && event.label}` })
+                    this.setState({ currentPage: value, dataSetValues: [], title: `English-${this.state.selectedLanguage} parallel corpus - Grouped by ${event && event.hasOwnProperty("label") && event.label}`,filterValue :'domain' })
                     break;
                 case 0:
                     this.handleApiCall("parallel-corpus", "languagePairs", [])
-                    this.setState({ currentPage: value, selectedLanguage: '', dataSetValues: [], title: "English-Indic language parallel corpus" })
+                    this.setState({ currentPage: value,filterValue :'domain', selectedLanguage: '', dataSetValues: [], title: "English-Indic language parallel corpus" })
                     break;
 
             }
