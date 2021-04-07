@@ -20,6 +20,7 @@
 		"prop-types": "^15.6.2",
 		"react": "^16.13.1",
 		"react-beautiful-dnd": "^13.0.0",
+		"react-device-detect": "^1.17.0",
 		"react-dom": "^16.13.1",
 		"react-native": "0.63.3",
 		"react-native-elements": "^0.19.1",
