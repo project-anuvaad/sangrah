@@ -154,11 +154,11 @@ class ChartRender extends React.Component {
             switch (value) {
                 case 1:
                     this.handleApiCall("parallel-corpus", filterValue ? filterValue : this.state.filterValue, [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label } }])
-                    this.setState({ currentPage: value, dataSetValues: [], selectedLanguage: this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label, title: `English-${this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label}  parallel corpus - Grouped by ${filterValue ? filterValue : this.state.filterValue}` })
+                    this.setState({ currentPage: value, dataSetValues: [], selectedLanguage: this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label, title: `English-${this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label}  parallel corpus - Grouped by ${(filterValue=="domain") ? "Domain" : (filterValue=="source") ? "Source" : filterValue=="collectionMethod" ?"Collection Method":"Domain"}` })
                     break;
                 case 2:
                     this.handleApiCall("parallel-corpus", this.state.filterValue == "source" ? "domain" : "source", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage } }, { "type": "PARAMS", "value": event && event.hasOwnProperty("label") && event.label }])
-                    this.setState({ currentPage: value, dataSetValues: [], title: `English-${this.state.selectedLanguage} parallel corpus - Grouped by ${event && event.hasOwnProperty("label") && event.label}`,filterValue :'domain' })
+                    this.setState({ currentPage: value, dataSetValues: [], title: `English-${this.state.selectedLanguage} parallel corpus`,filterValue :'domain' })
                     break;
                 case 0:
                     this.handleApiCall("parallel-corpus", "languagePairs", [])
