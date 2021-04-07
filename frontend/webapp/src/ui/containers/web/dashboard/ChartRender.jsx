@@ -37,7 +37,7 @@ class ChartRender extends React.Component {
             currentPage: 0,
             dataSetValues: [],
             filterValue: 'domain',
-            title: "Number of parallel sentences per language with English"
+            title: "English-Indic language parallel corpus"
         }
 
     }
@@ -154,15 +154,15 @@ class ChartRender extends React.Component {
             switch (value) {
                 case 1:
                     this.handleApiCall("parallel-corpus", filterValue ? filterValue : this.state.filterValue, [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label } }])
-                    this.setState({ currentPage: value, dataSetValues: [], selectedLanguage: this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label, title: `Number of parallel English-${this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label} sentences ` })
+                    this.setState({ currentPage: value, dataSetValues: [], selectedLanguage: this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label, title: `English-${this.state.selectedLanguage ? this.state.selectedLanguage : event && event.hasOwnProperty("label") && event.label}  parallel corpus - Grouped by ${filterValue ? filterValue : this.state.filterValue}` })
                     break;
                 case 2:
                     this.handleApiCall("parallel-corpus", this.state.filterValue == "source" ? "domain" : "source", [{ "type": "PARAMS", "sourceLanguage": { "type": "PARAMS", "value": "English" }, "targetLanguage": { "type": "PARAMS", "value": this.state.selectedLanguage } }, { "type": "PARAMS", "value": event && event.hasOwnProperty("label") && event.label }])
-                    this.setState({ currentPage: value, dataSetValues: [], title: `Number of parallel English-${this.state.selectedLanguage} sentences from ${event && event.hasOwnProperty("label") && event.label}` })
+                    this.setState({ currentPage: value, dataSetValues: [], title: `English-${this.state.selectedLanguage} parallel corpus - Grouped by ${event && event.hasOwnProperty("label") && event.label}` })
                     break;
                 case 0:
                     this.handleApiCall("parallel-corpus", "languagePairs", [])
-                    this.setState({ currentPage: value, selectedLanguage: '', dataSetValues: [], title: "Number of parallel sentences per language with English" })
+                    this.setState({ currentPage: value, selectedLanguage: '', dataSetValues: [], title: "English-Indic language parallel corpus" })
                     break;
 
             }
