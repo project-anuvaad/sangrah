@@ -185,7 +185,7 @@ class ChartRender extends React.Component {
     fetchLanuagePairButtons() {
 
         return (
-            <div style={isMobile ? { padding: "3% 0%" } : {}}>
+            <div>
                 <ToggleButtonGroup
                     value={this.state.filterValue}
                     exclusive
@@ -225,16 +225,16 @@ class ChartRender extends React.Component {
                         currentPage={this.state.currentPage}
 
                     />
-                    <div style={{ textAlign: "center", paddingBottom: isMobile ? "0" : "3%" }}>
+                    <div className={classes.title}>
                         <Typography value="" variant="h4" className={classes.typographyHeader}>
                             {this.state.title}
                         </Typography>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "row-reverse", width: "100%" }}>
+                    <div className={classes.langPairButtons}>
                         {this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
                     </div>
                     <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
-                        <div style={{ paddingBottom: "3%", textAlign: "right", minHeight: "30px" }}>
+                        <div className={classes.btn}>
                             {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&
                                 <Button color="primary" size="medium" variant="contained" style={{ textTransform: "capitalize" }} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
                             }

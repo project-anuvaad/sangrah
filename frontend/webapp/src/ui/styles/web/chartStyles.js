@@ -115,6 +115,23 @@ const FileUploadStyles = theme => ({
         
     //   }
     // }
+
+    title: {
+      textAlign: "center", paddingBottom: isMobile ? "0" : "3%" 
+    },
+    langPairButtons: {
+      display: "flex", flexDirection: "row-reverse", width: "100%",
+      padding: isMobile ? "3% 0%" : "0%"
+    },
+    btn: {
+      paddingBottom: "3%", textAlign: "right", minHeight: "30px"
+    }
+
+
+
+
+
+
     
   });
   
