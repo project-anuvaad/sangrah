@@ -185,7 +185,7 @@ class ChartRender extends React.Component {
     fetchLanuagePairButtons() {
 
         return (
-            <div>
+            <div style={ isMobile ? { padding: "3% 0%" } : {}}>
                 <ToggleButtonGroup
                     value={this.state.filterValue}
                     exclusive
@@ -225,32 +225,32 @@ class ChartRender extends React.Component {
                         currentPage={this.state.currentPage}
 
                     />
-                    <div className={classes.title}>
+                    <div style={{ textAlign: "center", paddingBottom: isMobile ? "0" : "1%" }}>
                         <Typography value="" variant="h4" className={classes.typographyHeader}>
                             {this.state.title}
                         </Typography>
                     </div>
-                    <div className={classes.langPairButtons}>
+                    <div style={{ display: "flex", flexDirection: "row-reverse", width: "100%" }}>
                         {this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
                     </div>
                     <Paper elevation={3} style={{ minHeight: '100%' }} className={classes.paper}>
-                        <div className={classes.btn}>
+                    <div className={classes.btn}>
                             {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&
                                 <Button color="primary" size="medium" variant="contained" style={{ textTransform: "capitalize" }} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
                             }
                         </div>
-                        <ResponsiveContainer width="95%" height={400}>
-                            <BarChart width={900} height={400} data={this.state.dataSetValues} maxBarSize={100} >
+                        <ResponsiveContainer width="95%" height={450}>
+                            <BarChart width={900} height={450} data={this.state.dataSetValues} maxBarSize={100} >
                                 <XAxis dataKey="label"
                                     textAnchor={isMobile ? "end" : "middle"}
-                                    tick={{ angle: isMobile ? -90 : 0 }} height={isMobile ? 100 : 20}
+                                    tick={{ angle: isMobile ? -90 : 0 }} height={isMobile ? 100 : 60}
                                     interval={0}
                                 />
                                 <YAxis type="number" dx={0} />
                                 <CartesianGrid horizontal={true} vertical={false} />
 
                                 <Tooltip />
-                                <Bar dataKey="value" radius={[12, 12, 0, 0]} maxBarSize={100} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
+                                <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={30} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
 
 
                                     {/* <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} /> */}
@@ -287,4 +287,3 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 );
 
 export default withRouter(withStyles(ChartStyles)(connect(mapStateToProps, mapDispatchToProps)(ChartRender)));
-

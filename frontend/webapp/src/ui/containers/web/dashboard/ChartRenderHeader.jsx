@@ -1,28 +1,9 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
-import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-
-import Grid from "@material-ui/core/Grid";
-
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-
-import history from "../../../../web.history";
-
-import MenuIcon from '@material-ui/icons/ArrowBack';
-
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
-import logo from '../../../../assets/logo.png';
-import anuvaadLogo from '../../../../assets/AnuvaadLogo.svg';
-import { translate } from '../../../../../src/assets/localisation';
-import themeAnuvaad from "../../../theme/web/theme-default";
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -32,7 +13,10 @@ import { isMobile } from 'react-device-detect';
 const styles = {
     container: {},
     containerDemo: {},
-    appBar: {},
+    appBar: {
+       boxShadow: 'none',
+       borderBottom: '1px solid #DADCE0'
+    },
     appBarShift: {},
     buttonLeft: {},
     buttonRight: {},
@@ -78,26 +62,15 @@ class ChartRenderHeader extends React.Component {
         return (
             <div>
                 <div>
-                    <AppBar position="fixed" color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)} style={{ height: '50px', padding: "0% 2%" }}>
+                    <AppBar position="fixed" color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)}  style={{ height: '56px', padding: "0% 3em" }}>
 
-                        <Toolbar disableGutters={!open_sidebar} style={{ minHeight: "50px" }}>
+                        <Toolbar disableGutters={!open_sidebar} style={{ minHeight: "56px" }}>
 
 
                             <div style={{ display: "flex", flexDirection: "row" }}>
-                                {/* {this.props.currentPage !== 0
-                                    &&
-                                    <div style={{display: "flex", flexDirection: "row", width: '5%'}}>
-                                        <IconButton id="menu" style={{ fontSize: "20px" }}
-                                            onClick={() => this.props.handleOnClick(this.props.currentPage - 1)}
-                                            className={classes.menuButton} color="inherit" aria-label="Menu">
-                                            <MenuIcon fontSize={ isMobile ? "small" : "large" }/>
-                                        </IconButton>
-                                        <div style={{ borderLeft: "1px solid #D6D6D6", height: "40px", marginRight: "10px", marginTop: "6px" }}></div>
-
-                                    </div>
-                                } */}
-                                <div>
-                                    <Typography variant={isMobile? "h5" : "h4"} >
+                              
+                                <div className={classes.divStyle}>
+                                    <Typography variant={isMobile? "h5" : "h5"} >
                                         Sangrah
                                         </Typography>
                                 </div>

@@ -13,13 +13,23 @@ const FileUploadStyles = theme => ({
       marginTop: theme.spacing(2)
     },
     div:{
-      display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', paddingTop: isMobile ? "0%" : "2%", width:'100%'
+      display: 'flex', 
+      flexDirection: 'column', 
+      flex: 1, 
+      alignItems: 'start', 
+      // paddingTop: isMobile ? "0%" : "5%", 
+      width:'100%',
+      backgroundColor: '#ffffff',
+      padding: '3em',
+      boxSizing: 'border-box',
+      borderRadius: '8px',
+      border: '1px solid #F5F5F5',
     },
     typographyHeader:{
      
       fontSize: 20,
   '@media (min-width:600px)': {
-    fontSize: 36,
+    fontSize: 24,
   }
   
       
@@ -47,14 +57,16 @@ const FileUploadStyles = theme => ({
     },
    paper: {
     
-      width: "94%",
+      width: "100%",
       minWidth: "250px",
-      marginTop: "2%",
-      marginBottom:'1%',
-      padding: "3% 3% 3% 3%",
+      marginTop: "",
+      marginTop:'4em',
+      padding: "0",
       // marginLeft: "15%",
-      
+      boxShadow: 'none',
+      backgroundColor: 'transparent',
       minHeight:'400px'
+
     },
     grid:{
       marginLeft: "5.5%" 
@@ -93,6 +105,9 @@ const FileUploadStyles = theme => ({
       color:"#FFFFFF",
       height:'46px'
     },
+
+    
+    
     // dropZoneArea:{
 
       
@@ -115,23 +130,17 @@ const FileUploadStyles = theme => ({
         
     //   }
     // }
-
     title: {
-      textAlign: "center", paddingBottom: isMobile ? "0" : "3%" 
+      textAlign: "center", paddingBottom: isMobile ? "0" : "1%" 
     },
     langPairButtons: {
       display: "flex", flexDirection: "row-reverse", width: "100%",
       padding: isMobile ? "3% 0%" : "0%"
     },
     btn: {
-      paddingBottom: "3%", textAlign: "right", minHeight: "30px"
+      paddingBottom: "3%", textAlign: "right", 
+      // minHeight: "30px"
     }
-
-
-
-
-
-
     
   });
   
