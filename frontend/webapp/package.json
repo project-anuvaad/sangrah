@@ -20,6 +20,7 @@
 		"prop-types": "^15.6.2",
 		"react": "^16.13.1",
 		"react-beautiful-dnd": "^13.0.0",
+		"react-clear-cache": "^1.4.12",
 		"react-device-detect": "^1.17.0",
 		"react-dom": "^16.13.1",
 		"react-native": "0.63.3",
@@ -72,7 +73,9 @@
 		"lint": "eslint --ext .js,.jsx src",
 		"lint:eslint": "eslint --ignore-path native-base-theme/* .eslintignore",
 		"lint:fix": "eslint --ext .js,.jsx src --fix",
-		"lint:staged": "lint-staged"
+		"lint:staged": "lint-staged",
+		"generate-build-version": "node generate-build-version",
+        "prebuild": "npm run generate-build-version"
 	},
 	"lint-staged": {
 		"*.js": [
