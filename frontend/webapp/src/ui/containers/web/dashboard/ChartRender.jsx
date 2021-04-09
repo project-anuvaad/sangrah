@@ -243,14 +243,16 @@ class ChartRender extends React.Component {
                             <BarChart width={900} height={450} data={this.state.dataSetValues} maxBarSize={100} >
                                 <XAxis dataKey="label"
                                     textAnchor={isMobile ? "end" : "middle"}
-                                    tick={{ angle: isMobile ? -90 : 0 }} height={isMobile ? 100 : 60}
+                                    tick={{ angle: isMobile ? -60 : 0 }} height={isMobile ? 100 : 60}
                                     interval={0}
+                                    position="insideLeft"
+                                    
                                 />
                                 <YAxis type="number" dx={0} />
-                                <CartesianGrid horizontal={true} vertical={false} />
+                                <CartesianGrid horizontal={true} vertical={false}  textAnchor={ "middle"}/>
 
                                 <Tooltip />
-                                <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={60} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
+                                <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={30} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
 
 
                                     {/* <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} /> */}
