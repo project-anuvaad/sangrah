@@ -250,7 +250,7 @@ class ChartRender extends React.Component {
                                 <CartesianGrid horizontal={true} vertical={false} />
 
                                 <Tooltip />
-                                <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={30} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
+                                <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={60} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} style={{ cursor: this.state.currentPage !== 2 && "pointer" }}>
 
 
                                     {/* <LabelList dataKey="value" position="top" style={{ textAnchor: 'middle', fontSize: '90%', fill: 'rgba(0, 0, 0, 0.87)' }} angle={270} /> */}
