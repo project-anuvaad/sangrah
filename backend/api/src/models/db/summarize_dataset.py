@@ -5,7 +5,7 @@ from src.db import get_db
 from anuvaad_auditor.loghandler import log_info, log_exception
 import pymongo
 
-DB_SCHEMA_NAME  = 'summary_dataset_v1'
+DB_SCHEMA_NAME  = 'summary_dataset_v2'
 # tag_mapping = {'languagePairs':1, 'collectionSource':3, 'domain':4, 'collectionMethod':5}
 
 language_extension = {'pu':'Punjabi', 
@@ -89,7 +89,7 @@ class SummarizeDatasetModel(object):
             aggregate_query = []
             if dataset['criterions'] != []:
                 aggregate_query.append(self.generate_match_query(dataset['criterions']))
-            collections = get_db()['dataset_v1']
+            collections = get_db()['dataset_v2']
             unique_set = set()
             if dataset['groupby']['value'] == 'languagePairs':
                 unique_values = collections.find().distinct('languagePairs')
