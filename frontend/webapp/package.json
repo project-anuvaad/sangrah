@@ -73,9 +73,7 @@
 		"lint": "eslint --ext .js,.jsx src",
 		"lint:eslint": "eslint --ignore-path native-base-theme/* .eslintignore",
 		"lint:fix": "eslint --ext .js,.jsx src --fix",
-		"lint:staged": "lint-staged",
-		"generate-build-version": "node generate-build-version",
-        "prebuild": "npm run generate-build-version"
+		"lint:staged": "lint-staged"
 	},
 	"lint-staged": {
 		"*.js": [

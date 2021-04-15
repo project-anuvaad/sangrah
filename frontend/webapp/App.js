@@ -7,31 +7,9 @@ import ClearCache from 'react-clear-cache';
 export default class App extends Component {
   render() {
     return (
-      <div>
-        <ClearCache>
-          {({ isLatestVersion, emptyCacheStorage }) => (
-            <div>
-              {!isLatestVersion && (
-                <p>
-                  <a
-                    href="#"
-                    onClick={e => {
-                      e.preventDefault();
-                      emptyCacheStorage();
-                    }}
-                  >
-                    Update version
-                </a>
-                </p>
-              )}
               <Provider store={storeFactory}>
                 <AppRoutes />
               </Provider>
-            </div>
-          )}
-        </ClearCache>
-
-      </div>
     );
   }
 }
