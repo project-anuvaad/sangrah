@@ -5,6 +5,10 @@ const FileUploadStyles = theme => ({
       display: 'flex',
       flexWrap: 'wrap'
     },
+    container: {
+      padding: '0 15px'
+    },
+
     margin: {
       margin: theme.spacing(1),
       width: '100%'
@@ -12,7 +16,7 @@ const FileUploadStyles = theme => ({
     withoutLabel: {
       marginTop: theme.spacing(2)
     },
-    div:{
+    card:{
       display: 'flex', 
       flexDirection: 'column', 
       flex: 1, 
@@ -20,10 +24,11 @@ const FileUploadStyles = theme => ({
       // paddingTop: isMobile ? "0%" : "5%", 
       width:'100%',
       backgroundColor: '#ffffff',
-      padding: '3em',
+      padding: '0',
       boxSizing: 'border-box',
-      borderRadius: '8px',
-      border: '1px solid #F5F5F5',
+      borderRadius: '.5rem',
+      border: '1px solid #EEEEF0',
+      minHeight: '38.75rem'
     },
     typographyHeader:{
      
@@ -60,14 +65,17 @@ const FileUploadStyles = theme => ({
       width: "100%",
       minWidth: "250px",
       marginTop: "",
-      marginTop:'4em',
+      marginTop:'3em',
       padding: "0",
       // marginLeft: "15%",
       boxShadow: 'none',
       backgroundColor: 'transparent',
-      minHeight:'400px'
+      minHeight:'400px',
+      padding:'1rem',
+      boxSizing: 'border-box'
 
     },
+    
     grid:{
       marginLeft: "5.5%" 
     },
@@ -139,9 +147,16 @@ const FileUploadStyles = theme => ({
         
     //   }
     // }
+
     title: {
-      textAlign: "center", paddingBottom: isMobile ? "0" : "1%" 
+      textAlign: "left", 
+      
+      borderBottom: '1px solid #EEEEF0',
+      width: '100%',
+      padding: '.6rem 1rem',
+      boxSizing: 'border-box'
     },
+
     langPairButtons: {
       display: "flex", flexDirection:isMobile ? "middle":"row-reverse", width: "100%",
       padding: isMobile ? "3% 0%" : "0%"
@@ -150,6 +165,7 @@ const FileUploadStyles = theme => ({
       paddingBottom: "3%", textAlign: "right", 
       // minHeight: "30px"
     }
+  
     
   });
   

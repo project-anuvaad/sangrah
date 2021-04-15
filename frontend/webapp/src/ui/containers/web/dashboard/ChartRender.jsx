@@ -217,16 +217,18 @@ class ChartRender extends React.Component {
         this.getData()
 
         return (
+            <>
+                        <ChartRenderHeader
+                handleOnClick={this.handleOnClick.bind(this)}
+                currentPage={this.state.currentPage}
 
-            <Container>
-                <div className={classes.div}>
-                    <ChartRenderHeader
-                        handleOnClick={this.handleOnClick.bind(this)}
-                        currentPage={this.state.currentPage}
+            />    
+            <Container className={classes.container}>
+                
+                <div className={classes.card}>
 
-                    />
                    <div className= {classes.title}>
-                        <Typography value="" variant="h4" className={classes.typographyHeader}>
+                        <Typography value="" variant="h6">
 
                             {this.state.title}
                         </Typography>
@@ -269,9 +271,11 @@ class ChartRender extends React.Component {
                 </div>
             </Container>
 
-
+            </>                                
         )
+        
     }
+    
 }
 
 const mapStateToProps = state => ({

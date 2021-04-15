@@ -35,4 +35,27 @@ const themeDefault = createMuiTheme({
 });
 
 
+
+themeDefault.typography.h6 = {
+  fontSize: '1.125rem',
+  fontWeight: '500',
+  fontFamily: '"Poppins", sans-serif',
+  '@media (min-width:600px)': {  
+  },
+  [themeDefault.breakpoints.up('md')]: {
+    
+    },
+
+};
+// themeDefault.typography.h6 = {
+//   fontSize: '1.2rem',
+//   fontFamily: '"Poppins", sans-serif',
+//   '@media (min-width:600px)': {
+//     fontSize: '1.125rem',
+//   },
+//   [themeDefault.breakpoints.up('md')]: {
+//     fontSize: '1.125rem',
+//     fontWeight: '500'
+//   },
+// };
 export default themeDefault;

@@ -15,7 +15,8 @@ const styles = {
     containerDemo: {},
     appBar: {
        boxShadow: 'none',
-       borderBottom: '1px solid #DADCE0'
+       borderBottom: '1px solid #EEEEF0',
+       padding: '0 3.125rem'
     },
     appBarShift: {},
     buttonLeft: {},
@@ -62,7 +63,7 @@ class ChartRenderHeader extends React.Component {
         return (
             <div>
                 <div>
-                    <AppBar position="fixed" color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)}  style={{ height: '56px', padding: "0% 3em" }}>
+                    <AppBar color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)} >
 
                         <Toolbar disableGutters={!open_sidebar} style={{ minHeight: "56px" }}>
 
@@ -70,9 +71,11 @@ class ChartRenderHeader extends React.Component {
                             <div style={{ display: "flex", flexDirection: "row" }}>
                               
                                 <div className={classes.divStyle}>
-                                    <Typography variant={isMobile? "h5" : "h5"} >
+                                
+                                    <Typography variant={isMobile? "h5" : "h6"} >
                                         Sangrah
                                         </Typography>
+                                        
                                 </div>
                             </div>
 
