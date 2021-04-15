@@ -78,14 +78,15 @@ const FileUploadStyles = theme => ({
     span:{
       color:'red'
     },
+    cursor:{
+      cursor:"pointer"
+    },
     button
     : {
-      marginTop: "6%",
-      marginLeft: "2%",
-      width: "100%",
-      backgroundColor:'#1C9AB7',
-      borderRadius:"20px 20px 20px 20px",
-      color:"#FFFFFF"
+      textTransform: "capitalize"
+    },
+    toggleButton:{
+      display: "flex", flexDirection: "row-reverse", width: "100%"
     },
     button1: {
       //marginTop: "9%",
@@ -104,6 +105,14 @@ const FileUploadStyles = theme => ({
       borderRadius:"20px 20px 20px 20px",
       color:"#FFFFFF",
       height:'46px'
+    },
+
+    buttonActive:
+    {
+      backgroundColor: "#1c9ab7", color: "white"
+    },
+    buttonDeactive:{
+      color: "black"
     },
 
     
@@ -134,7 +143,7 @@ const FileUploadStyles = theme => ({
       textAlign: "center", paddingBottom: isMobile ? "0" : "1%" 
     },
     langPairButtons: {
-      display: "flex", flexDirection: "row-reverse", width: "100%",
+      display: "flex", flexDirection:isMobile ? "middle":"row-reverse", width: "100%",
       padding: isMobile ? "3% 0%" : "0%"
     },
     btn: {

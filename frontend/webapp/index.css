@@ -1,0 +1,567 @@
+/* ------------- 
+lato font-family generate  
+-----------------*/
+
+/* @font-face {
+    font-family: 'Lato';
+    src: url('Lato-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Semibold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+} */
+/* ------------- 
+placeholder 
+-----------------*/
+.form-control::-webkit-input-placeholder {
+  font-size: .875rem;
+  color: #8C8C8C;
+  font-style: italic;
+}
+
+.form-control::-moz-placeholder {
+  font-size: .875rem;
+  color: #8C8C8C;
+  font-style: italic;
+}
+
+.form-control:-ms-input-placeholder {
+  font-size: .875rem;
+  color: #8C8C8C;
+  font-style: italic;
+}
+
+.form-control::-ms-input-placeholder {
+  font-size: .875rem;
+  color: #8C8C8C;
+  font-style: italic;
+}
+
+.form-control::placeholder {
+  font-size: .875rem;
+  color: #8C8C8C;
+  font-style: italic;
+}
+
+/* ------------- 
+common css start here
+-----------------*/
+* img {
+	-webkit-transition: all 300ms ease-in-out;
+	-moz-transition: all 300ms ease-in-out;
+	transition: all 300ms ease-in-out;
+}
+html, body {
+    max-width: 100%;
+    height: 100%;
+    font-size: 16px;
+
+}
+body {
+    font-family: 'Lato', sans-serif;
+    color: #0C0F0F;
+    background: #a02d2d;
+    margin: 0;
+    padding: 0;
+
+}
+
+:focus,
+button:focus,
+.btn:focus,
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+ul, li {
+    list-style: none;
+    padding-inline-start: 0;
+    padding: 0;
+    margin: 0;
+}
+a {
+    color: #2754FB;
+    /*     font-size: .875rem; */
+}
+a:hover { 
+   text-decoration: none;
+}
+img {
+	max-width: 100%;
+	height: auto;
+
+}
+/* ------------- 
+header css start here
+-----------------*/
+.container{
+  max-width: 1280px;
+}
+header {
+    background-color: #1C9AB7;
+    border-bottom: 1px solid #EEEEF0;
+    height: 56px;
+    padding: 0 3em;
+}
+.navbar-brand {
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  margin-right:3rem ;
+}
+.navbar-brand:hover {
+  color: #ffffff;
+}
+
+.e-court .brand-logo img {
+    height: 2.5rem;
+}
+/* ------------- 
+color patter start here
+-----------------*/
+.white {
+  color: #ffffff;
+}
+.grey {
+  color: #6D6F6F;
+}
+/* ------------- 
+background color patter start here
+-----------------*/
+.light-yellow{
+  background-color: #FDF7EB !important; 
+}
+.light-blue{
+  background-color: #EAEEFF !important; 
+}
+.light-green{
+  background-color: #E7F5F6 !important; 
+}
+.light-grey{
+  background-color: #FAFAFF !important; 
+}
+
+
+/* ------------- 
+Type face and font-weight css start here
+-----------------*/
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+  font-family: 'Poppins', sans-serif;
+}
+h1, .h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+h2, .h2 {
+  font-size: 2.625rem;
+  font-weight: bold;
+}
+
+h3, .h3 {
+  font-size: 2rem;
+}
+
+h4, .h4 {
+  font-size: 1.25rem;
+}
+
+h5, .h5 {
+  font-size: 1.125rem;
+}
+
+h6, .h6 {
+  font-size: 1rem;
+}
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+.small {
+  font-size: .875rem;
+  color: #6D6F6F;
+}
+.sub-small {
+ font-size: .75rem;	
+ color: #6D6F6F;
+}
+.f-400 {
+  font-weight: normal;
+}
+.f-500 {
+  font-weight: 500;
+}
+.f-600 {
+  font-weight: 600;
+}
+.f-bold {
+  font-weight: bold;
+}
+/* ------------- 
+button css start here
+-----------------*/
+.back-btn {
+    max-width: 4.625rem;
+    background-color: #F0F1F3;
+    border-radius: 0.25rem;
+    color: #0C0F0F;
+    font-size: .75rem;
+    display: flex;
+    padding: .3rem .7rem;
+    align-items: center;
+    justify-content: center;
+    border:  1px solid transparent;
+    width: 100%;
+}
+.back-btn:hover {
+  color: #0C0F0F;
+  border:  1px solid #F0F1F3;
+  background-color: #ffffff;
+
+}
+.back-btn span {
+  margin-left:-5px ;
+}
+.seperator {
+  width: 1px;
+  height: 2rem;
+  background-color: #DADCE0;
+  margin: 0 1.5rem;
+}
+
+/* .btn {
+  padding: 0 1rem;
+  border-radius: 4px;
+  background-color: #6D6F6F;
+  color: #ffffff;
+  font-size: 1rem;
+  display: inline-block;
+  border: none;
+  position: relative;
+  overflow:  hidden;
+  transition: background 400ms;
+  background-position: center;
+}
+
+.btn-lg {
+  min-width: 180px;
+  height: 60px;
+  line-height: 60px;
+}
+.btn:hover {
+  color: #ffffff;
+  background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
+}
+.btn:active {
+  background-color: #6eb9f7;
+  background-size: 100%;
+  transition: background 0s;
+}
+.btn-primary {
+  background-color: #2754FB;
+}
+.btn-sec {
+  background-color: #FFFFFF;
+  border: 1px solid #EDEEF0;
+}
+.btn-outline {
+  background-color: #F2F5FF;
+  border: 1px solid #2754FB;
+  color: #2754FB;
+}
+.btn-primary:hover {
+  background-color: #3862FF;
+} */
+.nav-pills .nav-link {
+    border-radius: .25rem;
+    font-size: .875rem;
+    color: #0C0F0F;
+    border: 1px solid transparent;
+    border-color: #EBEBEB;
+    margin: 0 .2rem;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #0C0F0F;
+    background-color: #E8F5F8;
+    border-color: #1C9AB7;
+}
+/* ------------- 
+input css start here
+-----------------*/
+.navbar {
+    padding: 0;
+    height: 3.5rem;
+    justify-content: start;
+}
+
+.navbar .navbar-nav {
+  margin-left: 3rem
+}
+.navbar .nav-link {
+  font-size: .875rem;
+  color: #ffffff;
+}
+.navbar .navbar-nav .nav-link {
+  padding:  0 .5rem;
+  margin: 0;
+  min-width: 7.5rem;
+  text-align: center;
+  height: 3.375rem;
+  line-height: 3.375rem;
+  position: relative;
+}
+.navbar .navbar-nav .nav-item.active .nav-link::after {
+  content: '';
+  width: 1.875rem;
+  height: 3px;
+  border-radius: 0.25rem;
+  background-color: #8AE770;
+
+  position: absolute;
+  bottom: .5rem;
+  left: 45px;
+
+}
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-item.active .nav-link{
+  background-color: #0F8DAA;
+}
+.navbar .form-inline {
+  max-width: 20rem;
+  width: 100%;
+  position: relative;
+  
+}
+header .form-inline .form-control {
+    width: 100%;
+    min-width: 200px;
+    padding-left: 2.5rem;
+    border: none;
+    color: #0C0F0F;
+}
+header .form-inline .search {
+    position: absolute;
+    left: 10px;
+    z-index: 1000;
+}
+
+.userProfile {
+    border-left: 1px solid #2FAECB;
+    padding-left: 1rem;
+}
+.profileImg {
+    width: 2.625rem;
+    height: 2.625rem;
+    background-color: #ffffff;
+    border-radius: 2.625rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    overflow: hidden;
+}
+.userProfile .nav-link {
+    padding: .5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100px;
+}
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+    position: absolute;
+    right: 0;
+    top: 1.1rem;
+}
+.sub-menu {
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #EEEEF0;
+  height: 2.625rem;
+}
+.sub-menu li a {
+    padding: 0 .7rem;
+    min-width: 120px;
+    font-size: .875rem;
+    color: #0C0F0F;
+    background-color: #ffffff;
+    height: 41px;
+    line-height: 41px;
+    display: block;
+}
+.sub-menu li a:hover,
+.sub-menu li.active a {
+  background-color: #E8F5F8;
+  color: #033367;
+}
+/* ------------- 
+card css start here
+-----------------*/
+.card {
+    border: 1px solid #EEEEF0;
+    border-radius: .5rem;
+    min-height: 620px;
+}
+.card .card-header,
+.card .card-body {
+  padding: .7rem 1.6rem;
+  background-color: transparent;
+
+}
+.card .card-header {
+  border-bottom: 1px solid #EEEEF0;
+}
+/* ------------- 
+Media breakpoints css start here
+-----------------*/
+@media (max-width: 1199.98px) { 
+header {
+  padding:  0;
+}
+.navbar-brand {
+    margin-right: 2rem;
+}
+.navbar .navbar-nav {
+    margin-left: 1rem;
+}
+.userProfile .nav-link {
+    width: 50px;
+}
+}
+
+@media (max-width: 991.98px) { 
+.navbar .form-inline {
+    max-width: initial;
+    top: 10px;
+}
+.navbar-toggler {
+    padding: .5em;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: #0F8DAA;
+    border: none;
+    border-radius: .25rem;
+    position: absolute;
+    right: 0;
+    top: .6rem;
+}
+.navbar-toggler-icon {
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    vertical-align: middle;
+    content: "";
+    background: #ffffff;
+    position: relative;
+    padding: 0 -1rem;
+}
+.navbar-toggler-icon::before, .navbar-toggler-icon::after {
+    content: '';
+    width: 20px;
+    height: 2px;
+    position: absolute;
+    top: -6px;
+    background-color: #ffffff;
+    left: 0;
+    border-radius: 10px;
+}
+.navbar-toggler-icon::after {
+    top: 6px;
+    width: 12px;
+}
+.navbar-collapse {
+
+    position: absolute;
+    width: 100%;
+    top: 110px;
+    z-index: 999;
+    height: 100vh;
+    background-color: #ffffff;
+}
+.navbar .navbar-nav .nav-item.active .nav-link::after {
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.navbar .navbar-nav {
+    margin-left: 0;
+}
+.navbar-brand {
+    margin-right: 1rem;
+}
+header {
+    height: 110px;
+}
+.navbar {
+    height: auto;
+}
+.navbar-brand {
+    margin-right: 0;
+    display: block;
+    width: 100%;
+    padding: 1rem 0 0;
+    font-size: 1.125rem;
+}
+.card .card-header, .card .card-body {
+    padding: .7rem 1rem;
+}
+.userProfile {
+  border-left: none;
+  padding-left:  0;
+    border-right: 1px solid #2FAECB;
+    padding-right: 1rem;
+    position: absolute;
+    right: 70px;
+    top: 10px;
+}
+.profileImg {
+    width: 2.4rem;
+    height: 2.4rem;
+}
+.userProfile .nav-link {
+    width: 5rem;
+}
+.nav-pills .nav-link {
+  padding:  .4rem .8rem;
+}
+}
+@media (max-width: 767.98px) { 
+  .userProfile {
+    right: 50px;
+  }
+.userProfile .nav-link {
+    width: 3rem;
+}
+ }
