@@ -177,40 +177,44 @@ class ChartRender extends React.Component {
         }
     }
 
-    handleLanguageChange = (event, value) => {
+    handleLanguageChange = (value) => {
         this.setState({ filterValue: value })
         this.handleOnClick(1, "", value)
     }
 
     fetchLanuagePairButtons() {
-        console.log("**********************Test for clear cache****************2**************")
+        const { classes } = this.props;
 
         return (
             <div>
-                <ToggleButtonGroup
-                
+                {/* <ToggleButtonGroup
+
                     value={this.state.filterValue}
                     exclusive
                     onChange={this.handleLanguageChange}
                     aria-label="text alignment"
                     color="primary"
                 >
-                    <ToggleButton value="domain" aria-label="left aligned"  style={this.state.filterValue === "domain" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }} >
+                    <ToggleButton value="domain" aria-label="left aligned" style={this.state.filterValue === "domain" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }} >
                         Domain
                     </ToggleButton>
-                    <ToggleButton value="source" aria-label="centered"  style={this.state.filterValue === "source" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }}>
+                    <ToggleButton value="source" aria-label="centered" style={this.state.filterValue === "source" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }}>
                         Source
                     </ToggleButton>
-                    <ToggleButton value="collectionMethod" aria-label="right aligned"  style={this.state.filterValue === "collectionMethod" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }}>
+                    <ToggleButton value="collectionMethod" aria-label="right aligned" style={this.state.filterValue === "collectionMethod" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }}>
                         Collection Method
                     </ToggleButton>
-                </ToggleButtonGroup>
+                </ToggleButtonGroup> */}
+
+                <Button color={this.state.filterValue === "domain" ? "primary" : "light"} style={ this.state.filterValue === "domain" ? {backgroundColor: "#E8F5F8"} : {} } size="medium" variant="outlined" className={classes.backButton} onClick={() => this.handleLanguageChange("domain")}>Domain</Button>
+                <Button color={this.state.filterValue === "source" ? "primary" : "light"} style={ this.state.filterValue === "source" ? {backgroundColor: "#E8F5F8"} : {} }size="medium" variant="outlined" className={classes.backButton} onClick={() => this.handleLanguageChange("source")}>Source</Button>
+                <Button color={this.state.filterValue === "collectionMethod" ? "primary" : "light"} style={ this.state.filterValue === "collectionMethod" ? {backgroundColor: "#E8F5F8"} : {} } size="medium" variant="outlined" className={classes.backButton} onClick={() => this.handleLanguageChange("collectionMethod")}>Collection Method</Button>
+           
             </div>
         )
     }
 
     render() {
-        console.log("----------------------Test for clear cache-----------2-----------------")
         console.log(this.state.dataSetValues)
         const { classes, open_sidebar } = this.props;
         const onEvents = {
@@ -221,67 +225,70 @@ class ChartRender extends React.Component {
 
         return (
             <>
-                        <ChartRenderHeader
-                handleOnClick={this.handleOnClick.bind(this)}
-                currentPage={this.state.currentPage}
+                <ChartRenderHeader
+                    handleOnClick={this.handleOnClick.bind(this)}
+                    currentPage={this.state.currentPage}
 
-            />    
-            <Container className={classes.container}>
-                
-                <div className={classes.card}>
-                    <div className={classes.cardHeader}>
-                    <div className={classes.btn}>
-                            {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&
-                                <Button color="light" size="medium" variant="contained" className={classes.backButton} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
-                            }
-                        </div>
-                        <div className={classes.seperator}></div>
-                   <div className= {classes.title}>
-                        <Typography value="" variant="h6">
+                />
+                <Container className={classes.container}>
 
-                            {this.state.title}
-                        </Typography>
+                    <div className={classes.card}>
+                        <div className={classes.cardHeader}>
+                            <div className={classes.btn}>
+                                {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&
+                                    <div className={classes.cardHeaderContainer}>
+                                        <Button color="light" size="medium" variant="contained" className={classes.backButton} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
+                                        <div className={classes.seperator}></div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div className={classes.title}>
+                                <Typography value="" variant="h6">
+
+                                    {this.state.title}
+                                </Typography>
+                            </div>
                         </div>
+                        <div className={classes.langPairButtons}>
+                            {this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
                         </div>
-                    <div className={classes.langPairButtons}>
-                        {this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
+                        <Paper elevation={3} className={classes.paper}>
+
+                            <ResponsiveContainer width="95%" height={450}>
+                                <BarChart width={900} height={450} data={this.state.dataSetValues} maxBarSize={100} >
+                                    <XAxis dataKey="label"
+                                        textAnchor={isMobile ? "end" : "middle"}
+                                        tick={{ angle: isMobile ? -60 : 0 }} height={isMobile ? 100 : 60}
+                                        interval={0}
+                                        position="insideLeft"
+
+                                    />
+                                    <YAxis type="number" dx={0} />
+                                    <CartesianGrid horizontal={true} vertical={false} textAnchor={"middle"} />
+
+                                    <Tooltip />
+                                    <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={30} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} className={this.state.currentPage !== 2 && classes.cursor}>
+
+                                        {
+                                            this.state.dataSetValues.length > 0 && this.state.dataSetValues.map((entry, index) => {
+                                                const color = colors[index < 9 ? index : index % 10]
+                                                return <Cell key={index} fill={`#${color}`} />;
+                                            })
+                                        }
+                                    </Bar>
+                                </BarChart>
+                            </ResponsiveContainer>
+
+                        </Paper>
                     </div>
-                    <Paper elevation={3} className={classes.paper}>
-                    
-                        <ResponsiveContainer width="95%" height={450}>
-                            <BarChart width={900} height={450} data={this.state.dataSetValues} maxBarSize={100} >
-                                <XAxis dataKey="label"
-                                    textAnchor={isMobile ? "end" : "middle"}
-                                    tick={{ angle: isMobile ? -60 : 0 }} height={isMobile ? 100 : 60}
-                                    interval={0}
-                                    position="insideLeft"
-                                    
-                                />
-                                <YAxis type="number" dx={0} />
-                                <CartesianGrid horizontal={true} vertical={false}  textAnchor={ "middle"}/>
+                </Container>
 
-                                <Tooltip />
-                                <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={30} onClick={(event) => { this.handleOnClick(this.state.currentPage + 1, event) }} className={ this.state.currentPage !== 2 && classes.cursor }>
-
-                                    {
-                                        this.state.dataSetValues.length > 0 && this.state.dataSetValues.map((entry, index) => {
-                                            const color = colors[index < 9 ? index : index % 10]
-                                            return <Cell key={index} fill={`#${color}`} />;
-                                        })
-                                    }
-                                </Bar>
-                            </BarChart>
-                        </ResponsiveContainer>
-
-                    </Paper>
-                </div>
-            </Container>
-
-            </>                                
+            </>
         )
-        
+
     }
-    
+
 }
 
 const mapStateToProps = state => ({

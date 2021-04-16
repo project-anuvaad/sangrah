@@ -1,5 +1,3 @@
-import { isMobile } from 'react-device-detect';
-
 const FileUploadStyles = theme => ({
     root: {
       display: 'flex',
@@ -122,8 +120,8 @@ const FileUploadStyles = theme => ({
     buttonDeactive:{
       color: "black"
     },
-
     
+
     
     // dropZoneArea:{
 
@@ -188,6 +186,10 @@ const FileUploadStyles = theme => ({
       margin: '0 1rem',
       fontSize: '.75rem'
     },
+    cardHeaderContainer: {
+      display: "flex", 
+      flexDirection: "row"
+    }
 
   });
   

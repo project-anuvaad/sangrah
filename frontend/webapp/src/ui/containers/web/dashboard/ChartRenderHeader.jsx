@@ -9,71 +9,27 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import { isMobile } from 'react-device-detect';
+import Styles from "../../../styles/web/ChartRenderHeaderStyles"
 
-const styles = {
-    container: {},
-    containerDemo: {},
-    appBar: {
-       boxShadow: 'none',
-       borderBottom: '1px solid #EEEEF0',
-       padding: '0 3.125rem'
-    },
-    appBarShift: {},
-    buttonLeft: {},
-    buttonRight: {},
-    editButton: {},
-    hide: {},
-    drawer: {},
-    drawerPaper: {},
-    drawerHeader: {},
-    contentShift: {},
-    drawerPaperClose: {},
-    toolbar: {},
-    title: {},
-    content: {},
-
-    root: {
-        flexGrow: 1,
-
-    },
-    flex: {
-        flex: 1,
-
-    },
-    felxDemo: {
-        flex: 1,
-        marginLeft: "1%"
-    },
-    menuButton: {
-        marginLeft: -12,
-        // marginRight: 20,
-        marginRight: "8px !important",
-    },
-    divider: {
-        marginLeft: '12%',
-        marginRight: '12%'
-    }
-};
 
 class ChartRenderHeader extends React.Component {
 
     render() {
         const { classes, open_sidebar } = this.props;
-
         return (
             <div>
                 <div>
                     <AppBar color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)} >
 
-                        <Toolbar disableGutters={!open_sidebar} style={{ minHeight: "56px" }}>
+                        <Toolbar disableGutters={!open_sidebar} className={classes.toolbar}>
 
 
-                            <div style={{ display: "flex", flexDirection: "row" }}>
+                            <div className={classes.drawerHeader}>
                               
                                 <div className={classes.divStyle}>
                                 
                                     <Typography variant={isMobile? "h5" : "h6"} >
-                                        Sangrah Dashboard
+                                        Sangrah
                                         </Typography>
                                         
                                 </div>
@@ -105,4 +61,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withStyles(styles)(ChartRenderHeader));
+)(withStyles(Styles)(ChartRenderHeader));
