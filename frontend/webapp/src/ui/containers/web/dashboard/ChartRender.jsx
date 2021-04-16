@@ -183,7 +183,7 @@ class ChartRender extends React.Component {
     }
 
     fetchLanuagePairButtons() {
-        console.log("**********************Test for clear cache******************************")
+        console.log("**********************Test for clear cache****************2**************")
 
         return (
             <div>
@@ -209,7 +209,7 @@ class ChartRender extends React.Component {
     }
 
     render() {
-        console.log("----------------------Test for clear cache----------------------------")
+        console.log("----------------------Test for clear cache-----------2-----------------")
         console.log(this.state.dataSetValues)
         const { classes, open_sidebar } = this.props;
         const onEvents = {

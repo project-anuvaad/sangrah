@@ -73,7 +73,7 @@ class ChartRenderHeader extends React.Component {
                                 <div className={classes.divStyle}>
                                 
                                     <Typography variant={isMobile? "h5" : "h6"} >
-                                        Sangrah
+                                        Sangrah Dashboard
                                         </Typography>
                                         
                                 </div>
