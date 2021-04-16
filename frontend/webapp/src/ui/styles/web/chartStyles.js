@@ -94,7 +94,7 @@ const FileUploadStyles = theme => ({
       textTransform: "capitalize"
     },
     toggleButton:{
-      display: "flex", flexDirection: "row-reverse", width: "100%"
+      display: "flex", flexDirection: "row-reverse", width: "100%",
     },
     button1: {
       //marginTop: "9%",
@@ -150,23 +150,45 @@ const FileUploadStyles = theme => ({
 
     title: {
       textAlign: "left", 
+
       
-      borderBottom: '1px solid #EEEEF0',
-      width: '100%',
-      padding: '.6rem 1rem',
-      boxSizing: 'border-box'
+      
     },
 
     langPairButtons: {
-      display: "flex", flexDirection:isMobile ? "middle":"row-reverse", width: "100%",
-      padding: isMobile ? "3% 0%" : "0%"
+      display: "flex", 
+      justifyContent: 'flex-end', 
+      width: "100%",
+      padding:'.6rem 1rem',
+      boxSizing: 'border-box'
+    },
+    cardHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      borderBottom: '1px solid #EEEEF0',
+      padding: '.6rem 1rem',
+      width: '100%',
+      boxSizing: 'border-box'
     },
     btn: {
-      paddingBottom: "3%", textAlign: "right", 
+       
       // minHeight: "30px"
-    }
-  
-    
+    },
+    backButton: {
+      boxShadow: 'none',
+      backgroundColor: '#F0F1F3',
+      color: '#0C0F0F',
+      padding: '.5rem .625rem',
+      marginRight: '.5rem'
+    },
+    seperator: {
+      width: '1px',
+      height: '2rem',
+      backgroundColor: '#DADCE0',
+      margin: '0 1rem',
+      fontSize: '.75rem'
+    },
+
   });
   
   

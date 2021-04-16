@@ -187,19 +187,20 @@ class ChartRender extends React.Component {
         return (
             <div>
                 <ToggleButtonGroup
+                
                     value={this.state.filterValue}
                     exclusive
                     onChange={this.handleLanguageChange}
                     aria-label="text alignment"
                     color="primary"
                 >
-                    <ToggleButton value="domain" aria-label="left aligned" color="primary" style={this.state.filterValue === "domain" ? { backgroundColor: "#1c9ab7", color: "white" } : { color: "black" }} >
+                    <ToggleButton value="domain" aria-label="left aligned"  style={this.state.filterValue === "domain" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }} >
                         Domain
                     </ToggleButton>
-                    <ToggleButton value="source" aria-label="centered" color="primary" style={this.state.filterValue === "source" ? { backgroundColor: "#1c9ab7", color: "white" } : { color: "black" }}>
+                    <ToggleButton value="source" aria-label="centered"  style={this.state.filterValue === "source" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }}>
                         Source
                     </ToggleButton>
-                    <ToggleButton value="collectionMethod" aria-label="right aligned" color="primary" style={this.state.filterValue === "collectionMethod" ? { backgroundColor: "#1c9ab7", color: "white" } : { color: "black" }}>
+                    <ToggleButton value="collectionMethod" aria-label="right aligned"  style={this.state.filterValue === "collectionMethod" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }}>
                         Collection Method
                     </ToggleButton>
                 </ToggleButtonGroup>
@@ -226,22 +227,25 @@ class ChartRender extends React.Component {
             <Container className={classes.container}>
                 
                 <div className={classes.card}>
-
+                    <div className={classes.cardHeader}>
+                    <div className={classes.btn}>
+                            {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&
+                                <Button color="light" size="medium" variant="contained" className={classes.backButton} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
+                            }
+                        </div>
+                        <div className={classes.seperator}></div>
                    <div className= {classes.title}>
                         <Typography value="" variant="h6">
 
                             {this.state.title}
                         </Typography>
                         </div>
+                        </div>
                     <div className={classes.langPairButtons}>
                         {this.state.currentPage === 1 && this.fetchLanuagePairButtons()}
                     </div>
                     <Paper elevation={3} className={classes.paper}>
-                    <div className={classes.btn}>
-                            {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&
-                                <Button color="primary" size="medium" variant="contained" className={classes.button} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
-                            }
-                        </div>
+                    
                         <ResponsiveContainer width="95%" height={450}>
                             <BarChart width={900} height={450} data={this.state.dataSetValues} maxBarSize={100} >
                                 <XAxis dataKey="label"
