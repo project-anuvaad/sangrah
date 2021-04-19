@@ -237,12 +237,17 @@ class ChartRender extends React.Component {
                     <div className={classes.card}>
                         <div className={classes.cardHeader}>
                             <div className={classes.btn}>
-                                {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&
+                                
                                     <div className={classes.cardHeaderContainer}>
+                                    {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&
+                                    <>
                                         <Button color="light" size="medium" variant="contained" className={classes.backButton} startIcon={<BackIcon />} onClick={() => this.handleCardNavigation()}>Back</Button>
+                                    
                                         <div className={classes.seperator}></div>
+                                        </>
+                                    }
                                     </div>
-                                }
+                                
                             </div>
 
                             <div className={classes.title}>
