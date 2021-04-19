@@ -223,6 +223,8 @@ class ChartRender extends React.Component {
         }
         this.getData()
 
+        console.log("----------------------------------------Test--------------------------------------------")
+
         return (
             <>
                 <ChartRenderHeader
