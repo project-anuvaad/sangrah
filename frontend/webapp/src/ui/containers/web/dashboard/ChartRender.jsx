@@ -11,8 +11,7 @@ import {
     BarChart, Bar, Brush, Cell, CartesianGrid, ReferenceLine, ReferenceArea,
     XAxis, YAxis, Tooltip, Legend, ErrorBar, LabelList, Rectangle
 } from 'recharts';
-import _ from 'lodash';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import { showSidebar } from '../../../../flux/actions/apis/common/showSidebar';
 import FetchLanguageDataSets from "../../../../flux/actions/apis/dashboard/languageDatasets";
@@ -21,10 +20,6 @@ import Container from '@material-ui/core/Container';
 import { isMobile } from 'react-device-detect';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ArrowBack';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-const theme = createMuiTheme();
-var randomColor = require('randomcolor');
 var jp = require('jsonpath')
 var colors = ["188efc", "7a47a4", "b93e94", "1fc6a4", "f46154", "d088fd", "f3447d", "188efc", "f48734", "189ac9", "0e67bd"]
 
@@ -48,61 +43,13 @@ class ChartRender extends React.Component {
         return dataCalue
     }
 
-    getOption() {
-
-        const option = {
-            tooltip: {},
-            xAxis: {
-                type: 'category',
-                data: this.getData("label"),
-            },
-            yAxis: {
-                type: 'value',
-            },
-            series: [
-                {
-                    data: this.getData("value"),
-                    type: 'bar',
-                    smooth: true,
-                },
-            ],
-
-        }
-
-        return option
-    }
-
     componentDidMount() {
-
-
-
         this.handleApiCall("parallel-corpus", "languagePairs", [])
-
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.dataValues !== this.props.dataValues) {
             if (this.props.dataValues.length > 0) {
-                // let others = this.props.dataValues.slice(7, this.props.dataValues.length)
-                // let othersCount = 0
-                // others.map(dataVal => {
-                //     othersCount = dataVal.value + othersCount
-
-                // })
-
-                // let dataSetValues = this.props.dataValues.slice(0, 7)
-                // let obj = {}
-                // let cardNavigation = false
-
-                // if (this.props.dataValues.length > 7) {
-                //     obj.value = othersCount
-                //     obj.label = "Others"
-                //     dataSetValues.push(obj)
-
-                //     cardNavigation = true
-                // }
-
-                // this.setState({ dataSetValues, originalValues: this.props.dataValues, cardNavigation })
                 this.fetchChartData()
             }
 
@@ -187,25 +134,6 @@ class ChartRender extends React.Component {
 
         return (
             <div>
-                {/* <ToggleButtonGroup
-
-                    value={this.state.filterValue}
-                    exclusive
-                    onChange={this.handleLanguageChange}
-                    aria-label="text alignment"
-                    color="primary"
-                >
-                    <ToggleButton value="domain" aria-label="left aligned" style={this.state.filterValue === "domain" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }} >
-                        Domain
-                    </ToggleButton>
-                    <ToggleButton value="source" aria-label="centered" style={this.state.filterValue === "source" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }}>
-                        Source
-                    </ToggleButton>
-                    <ToggleButton value="collectionMethod" aria-label="right aligned" style={this.state.filterValue === "collectionMethod" ? { backgroundColor: "#E8F5F8", color: "#0C0F0F" } : { color: "#0C0F0F" }}>
-                        Collection Method
-                    </ToggleButton>
-                </ToggleButtonGroup> */}
-
                 <Button color={this.state.filterValue === "domain" ? "primary" : "light"} style={ this.state.filterValue === "domain" ? {backgroundColor: "#E8F5F8"} : {} } size="medium" variant="outlined" className={classes.backButton} onClick={() => this.handleLanguageChange("domain")}>Domain</Button>
                 <Button color={this.state.filterValue === "source" ? "primary" : "light"} style={ this.state.filterValue === "source" ? {backgroundColor: "#E8F5F8"} : {} }size="medium" variant="outlined" className={classes.backButton} onClick={() => this.handleLanguageChange("source")}>Source</Button>
                 <Button color={this.state.filterValue === "collectionMethod" ? "primary" : "light"} style={ this.state.filterValue === "collectionMethod" ? {backgroundColor: "#E8F5F8"} : {} } size="medium" variant="outlined" className={classes.backButton} onClick={() => this.handleLanguageChange("collectionMethod")}>Collection Method</Button>
@@ -216,14 +144,9 @@ class ChartRender extends React.Component {
 
     render() {
         console.log(this.state.dataSetValues)
-        const { classes, open_sidebar } = this.props;
-        const onEvents = {
-            'click': this.onChartClick,
-            'legendselectchanged': this.onChartLegendselectchanged
-        }
+        const { classes } = this.props;
+      
         this.getData()
-
-        console.log("----------------------------------------Test--------------------------------------------")
 
         return (
             <>
@@ -236,7 +159,7 @@ class ChartRender extends React.Component {
 
                     <div className={classes.card}>
                         <div className={classes.cardHeader}>
-                            <div className={classes.btn}>
+                            <div>
                                 
                                     <div className={classes.cardHeaderContainer}>
                                     {(this.state.cardNavigation || this.state.currentPage !== 0) && this.state.dataSetValues.length > 0 &&

@@ -16,7 +16,6 @@ import LoginStyles from "../../../styles/web/LoginStyles";
 import history from "../../../../web.history";
 import TextField from '../../../components/web/common/TextField';
 import Snackbar from "../../../components/web/common/Snackbar";
-// import { translate } from "../../../assets/localisation";
 
 import LoginAPI from "../../../../flux/actions/apis/login";
 import profileDetails from '../../../../flux/actions/apis/profile_details';
@@ -32,15 +31,6 @@ class Login extends React.Component {
     };
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    /**
-    * getSnapshotBeforeUpdate() must return null
-    */
-    return null;
-  }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-  }
-
   componentDidMount() {
     localStorage.removeItem("token");
     window.addEventListener('keypress', (key) => {
@@ -49,7 +39,6 @@ class Login extends React.Component {
       }
     })
 
-    // TELEMETRY.pageLoadCompleted('login')
   }
 
   /**
@@ -114,12 +103,9 @@ class Login extends React.Component {
         localStorage.setItem("userProfile", JSON.stringify(resData));
         if (roles.includes('ADMIN')){
           history.push(`${process.env.PUBLIC_URL}/user-details`);
-          // history.push(`${process.env.PUBLIC_URL}/create-user`)
         }else{
-          debugger
           history.push(`${process.env.PUBLIC_URL}/parallel-corpus`);
         }
-        // history.push(`${process.env.PUBLIC_URL}/create-user`)
       }
     }).catch((error) => {
       console.log('api failed because of server or network')

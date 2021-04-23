@@ -1,6 +1,5 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import classNames from "classnames";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -11,7 +10,6 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import { isMobile } from 'react-device-detect';
 import Styles from "../../../styles/web/ChartRenderHeaderStyles"
 
-
 class ChartRenderHeader extends React.Component {
 
     render() {
@@ -19,7 +17,7 @@ class ChartRenderHeader extends React.Component {
         return (
             <div>
                 <div>
-                    <AppBar color="primary" className={classNames(classes.appBar, this.props.open_sidebar && classes.appBarShift)} >
+                    <AppBar color="primary" className={classes.appBar} >
 
                         <Toolbar disableGutters={!open_sidebar} className={classes.toolbar}>
 
@@ -45,8 +43,6 @@ class ChartRenderHeader extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    // open_sidebar: state.open_sidebar.open
-    drill_down: state.drill_down
 });
 
 const mapDispatchToProps = dispatch =>
